@@ -47,7 +47,7 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Danh sách khách hàng của cửa hàng bạn</h3>
-                <input id="btnShowCreateModal" type="submit" value="Create new Product"
+                <input id="btnShowCreateModal" type="submit" value="Thêm mới khách hàng"
                        class="btn btn-outline-info float-right" title="Create" data-toggle="tooltip">
               </div>
 
@@ -65,7 +65,7 @@
                       <th>Huyện</th>
                       <th>Xã</th>
                       <th>Địa chỉ</th>
-                      <th colspan="5">Thao tác</th>
+                      <th colspan="2">Thao tác</th>
                     </tr>
                   </thead>
                   <tbody></tbody>
@@ -101,14 +101,20 @@
 <th:block th:replace="/layout/admin/products/scriptProducts :: scriptProducts"/>
 
 
+
 <script>
   const page = {
     urls: {
-      getAllProducts: App.PRODUCTS_API,
-      getProductById: App.PRODUCTS_API,
-      createProduct: App.PRODUCTS_API,
-      updateProduct: App.PRODUCTS_API + "/update",
-      deleteProduct:  App.PRODUCTS_API + "/delete",
+      getAllCustomers: App.CUSTOMER_API,
+      getCustomerById: App.CUSTOMER_API,
+      createCustomer: App.CUSTOMER_API,
+      updateCustomer: App.CUSTOMER_API,
+
+      deleteCustomer: App.CUSTOMER_API + "/delete",
+
+      getAllProvinces: App.PROVINCE_API,
+      getAllDistricts: App.DISTRICT_API,
+      getAllWards: App.WARD_API
 
     },
     elements: {},
@@ -126,70 +132,88 @@
   page.elements.loader = $(".loader");
 
   page.elements.btnShowCreateModal = $("#btnShowCreateModal");
-  page.elements.tbProduct = $("#tbProduct");
-  page.elements.tbProductBody = $("#tbProduct tbody");
-
-  page.dialogs.alertDanger.modalCreate = $("#modalCreate .modal-body .modal-alert-danger");
-  page.dialogs.alertDanger.modalUpdate = $("#modalUpdate .modal-body .modal-alert-danger");
+  page.elements.tbCustomer = $("#tbCustomer");
+  page.elements.tbCustomerBody = $("#tbCustomer tbody");
 
   page.dialogs.elements.modalCreate = $("#modalCreate");
-  page.dialogs.elements.frmCreateProduct = $("#frmCreateProduct");
-  page.dialogs.elements.titleCre = $("#titleCre");
-  page.dialogs.elements.priceCre = $("#priceCre");
-  page.dialogs.elements.quantityCre = $("#quantityCre");
-  page.dialogs.elements.descriptionCre = $("#descriptionCre");
+  page.dialogs.elements.frmCreateCustomer = $("#frmCreateCustomer");
+  page.dialogs.elements.fullNameCre = $("#fullNameCre");
+  page.dialogs.elements.emailCre = $("#emailCre");
+  page.dialogs.elements.phoneCre = $("#phoneCre");
+  page.dialogs.elements.addressCre = $("#addressCre");
   page.dialogs.elements.btnCreate = $("#btnCreate");
+  page.dialogs.elements.provinceCre = $("#provinceCre");
+  page.dialogs.elements.districtCre = $("#districtCre");
+  page.dialogs.elements.wardCre = $("#wardCre");
+  page.dialogs.elements.addressCre = $("#addressCre");
 
   page.dialogs.elements.modalUpdate = $("#modalUpdate");
-  page.dialogs.elements.frmUpdateProduct = $("#frmUpdateProduct");
-  page.dialogs.elements.titleUp = $("#titleUp");
-  page.dialogs.elements.priceUp = $("#priceUp");
-  page.dialogs.elements.quantityUp  = $("#quantityUp");
-  page.dialogs.elements.descriptionUp  = $("#descriptionUp");
+  page.dialogs.elements.frmUpdateCustomer = $("#frmUpdateCustomer");
+  page.dialogs.elements.customerIdUp = $("#customerIdUp");
+  page.dialogs.elements.fullNameUp = $("#fullNameUp");
+  page.dialogs.elements.emailUp = $("#emailUp");
+  page.dialogs.elements.phoneUp = $("#phoneUp");
+  page.dialogs.elements.addressUp = $("#addressUp");
+  page.dialogs.elements.provinceUp = $("#provinceUp");
+  page.dialogs.elements.districtUp = $("#districtUp");
+  page.dialogs.elements.wardUp = $("#wardUp");
   page.dialogs.elements.btnUpdate = $("#btnUpdate");
 
-  page.dialogs.elements.wrapper = $("#frmCreateProduct section .wrappers");
+  page.dialogs.alertDanger.modalUpdate = $("#modalUpdate .modal-body .modal-alert-danger");
+  page.dialogs.alertDanger.modalCreate = $("#modalCreate .modal-body .modal-alert-danger");
+  page.dialogs.alertDanger.modalDeposit = $("#modalDeposit .modal-body .modal-alert-danger");
+  page.dialogs.alertDanger.modalWithdraw = $("#modalWithdraw .modal-body .modal-alert-danger");
+  page.dialogs.alertDanger.modalTransfer = $("#modalTransfer .modal-body .modal-alert-danger");
+
+
+  page.dialogs.elements.wrapper = $("#frmCreateCustomer section .wrappers");
   page.dialogs.elements.imageFile = $("#imageFile");
-  page.dialogs.elements.wrapperContent = $("#frmCreateProduct section .wrappers .content");
-  page.dialogs.elements.imagePreview = $("#frmCreateProduct section .image-preview canvas");
+  page.dialogs.elements.wrapperContent = $("#frmCreateCustomer section .wrapper .content");
+  page.dialogs.elements.imagePreview = $("#frmCreateCustomer section .image-preview canvas");
   page.dialogs.elements.canvas = $("#canvas");
   page.dialogs.elements.context = page.dialogs.elements.canvas[0].getContext('2d');
   page.dialogs.elements.imagePreview.css("display", "none");
-  page.dialogs.elements.divImagePreview = $("#frmCreateProduct div.image-preview,#frmCreateProduct div.file-name");
-  page.dialogs.elements.btnClearImagePreview = $("#frmCreateProduct .clear-image-preview i");
+  page.dialogs.elements.divImagePreview = $("#frmCreateCustomer div.image-preview,#frmCreateCustomer div.file-name");
+  page.dialogs.elements.btnClearImagePreview = $("#frmCreateCustomer .clear-image-preview i");
 
-  page.dialogs.elements.wrapperUp = $("#frmUpdateProduct section .wrappers");
+  page.dialogs.elements.wrapperUp = $("#frmUpdateCustomer section .wrappers");
   page.dialogs.elements.imageFileUp = $("#imageFileUp");
-  page.dialogs.elements.wrapperContentUp = $("#frmUpdateProduct section .wrappers .content");
-  page.dialogs.elements.imagePreviewUp = $("#frmUpdateProduct section .image-preview canvas");
+  page.dialogs.elements.wrapperContentUp = $("#frmUpdateCustomer section .wrapper .content");
+  page.dialogs.elements.imagePreviewUp = $("#frmUpdateCustomer section .image-preview canvas");
   page.dialogs.elements.canvasUp = $("#canvasUp");
   page.dialogs.elements.contextUp = page.dialogs.elements.canvasUp[0].getContext('2d');
   page.dialogs.elements.imagePreviewUp.css("display", "none");
-  page.dialogs.elements.divImagePreviewUp = $("#frmUpdateProduct div.image-preview,#frmUpdateProduct div.file-name");
-  page.dialogs.elements.btnClearImagePreviewUp = $("#frmUpdateProduct .clear-image-preview i");
+  page.dialogs.elements.divImagePreviewUp = $("#frmUpdateCustomer div.image-preview, #frmUpdateCustomer div.file-name");
+  page.dialogs.elements.btnClearImagePreviewUp = $("#frmUpdateCustomer .clear-image-preview i");
 
+  let customer = new Customer();
+  let locationRegion = new LocationRegion();
 
-  let product = new Product();
-
-  page.commands.getAllProducts = () => {
+  page.commands.getAllCustomers = () => {
     $.ajax({
       headers: {
         "accept": "application/json",
         "content-type": "application/json"
       },
       type: "GET",
-      url: page.urls.getAllProducts
+      url: page.urls.getAllCustomers
     })
             .done((data) => {
 
               $.each(data, (i, item) => {
 
-                let product = item;
+                customer = item;
+                locationRegion = customer.locationRegion;
+                if (customer.avatarDTO.fileName === null) {
+                  customer.avatarDTO.fileName = "default_ie77t2.png";
+                  customer.avatarDTO.fileFolder = "avatar_images";
+                }
 
-                let avatar = product.avatar;
-                let str = renderProduct(product, avatar);
+                let avatar = customer.avatarDTO;
+                let str = renderCustomer(customer, locationRegion, avatar);
+                // let str = renderCustomer(customer, locationRegion);
 
-                page.elements.tbProductBody.prepend(str);
+                page.elements.tbCustomerBody.prepend(str);
               })
               page.commands.handleEventShow();
             })
@@ -197,37 +221,110 @@
               console.error(error);
             })
   }
-
-  page.commands.getProductById = (productId) => {
-    return $.ajax({
+  page.commands.getAllProvinces = (objEnd) => {
+    return  $.ajax({
+      headers: {
+        "accept": "application/json",
+        "content-type": "application/json"
+      },
       type: "GET",
-      url: page.urls.getProductById + "/" + productId
+      url: page.urls.getAllProvinces
     })
             .done((data) => {
 
+              $(`#province${objEnd}`).empty()
+
+              let results = data.results;
+
+              results.map(item => {
+                let str = `<option value="${item.province_id}">${item.province_name}</option>`;
+                $(`#province${objEnd}`).append(str);
+              })
+            })
+            .fail((error) => {
+              App.SweetAlert.showAlertError("Lỗi hệ thống, không tìm thấy thông tin tỉnh");
+            })
+  }
+  page.commands.getAllDistricts = (provinceId,objEnd) => {
+    return  $.ajax({
+      headers: {
+        "accept": "application/json",
+        "content-type": "application/json"
+      },
+      type: "GET",
+      url: page.urls.getAllDistricts + provinceId
+    })
+            .done((data) => {
+              $(`#district${objEnd}`).empty()
+
+              let results = data.results;
+
+              results.map(item => {
+                let str = `<option value="${item.district_id}">${item.district_name}</option>`;
+                $(`#district${objEnd}`).append(str);
+              })
+            })
+            .fail((error) => {
+              App.SweetAlert.showAlertError("Lỗi hệ thống, không tìm thấy thông tin quận, huyện");
+            })
+  }
+  page.commands.getAllWards = (districtId,objEnd) => {
+    return  $.ajax({
+      headers: {
+        "accept": "application/json",
+        "content-type": "application/json"
+      },
+      type: "GET",
+      url: page.urls.getAllWards + districtId
+    })
+            .done((data) => {
+              $(`#ward${objEnd}`).empty()
+
+              let results = data.results;
+
+              results.map(item => {
+                let str = `<option value="${item.ward_id}">${item.ward_name}</option>`;
+                $(`#ward${objEnd}`).append(str);
+              })
+            })
+            .fail((error) => {
+              App.SweetAlert.showAlertError("Lỗi hệ thống, không tìm thấy thông tin phường, xã");
+            })
+  }
+  page.commands.getCustomerById = (customerId) => {
+    return $.ajax({
+      type: "GET",
+      url: page.urls.getCustomerById + "/" + customerId
+    })
+            .done((data) => {
+              // customer = data;
             })
             .fail((error) => {
               console.error(error);
             })
   }
 
-  function renderProduct(product, avatar) {
+  function renderCustomer(customer, locationRegion, avatar) {
     return `
-                    <tr id="tr_${product.id}">
-                        <td>${product.id}</td>
+                    <tr id="tr_${customer.id}">
+                        <td>${customer.id}</td>
                         <td><img src="${App.SERVER_CLOUDINARY + App.SCALE_W150_H150_Q100 + "/" + avatar.fileFolder + "/" + avatar.fileName}" alt="avatar" ></td>
-                        <td>${product.title}</td>
-                        <td>${new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(product.price)}</td>
-                        <td>${product.quantity}</td>
-                        <td>${product.description}</td>
+                        <td>${customer.fullName}</td>
+                        <td>${customer.email}</td>
+                        <td>${customer.phone}</td>
+
+                        <td>${locationRegion.provinceName}</td>
+                        <td>${locationRegion.districtName}</td>
+                        <td>${locationRegion.wardName}</td>
+                        <td>${locationRegion.address}</td>
                         <td>
-                            <button class="btn btn-outline-primary update" data-id="${product.id}" data-avatar-folder="${avatar.fileFolder}" data-avatar-file-name="${avatar.fileName}" title="Edit" data-toggle="tooltip">
+                            <button class="btn btn-outline-secondary update" data-id="${customer.id}" data-avatar-folder="${avatar.fileFolder}" data-avatar-file-name="${avatar.fileName}" title="Edit" data-toggle="tooltip">
                                 <i class="fa-regular fa-pen-to-square " aria-hidden="true"></i>
                             </button>
                         </td>
-
                         <td>
-                            <button id="btnDelete_${product.id}" class="btn btn-outline-danger delete" data-id="${product.id}" title="Suspend" data-toggle="tooltip">
+
+                            <button class="btn btn-outline-danger delete" data-id="${customer.id}" title="Suspend" data-toggle="tooltip">
                                 <i class="fa fa-ban" aria-hidden="true"></i>
                             </button>
 
@@ -236,10 +333,72 @@
                 `;
   }
 
+  page.commands.deleteCustomer = (obj) => {
+    $.ajax({
+      headers: {
+        "accept": "application/json",
+        "content-type": "application/json"
+      },
+      type: "PATCH",
+      url: page.urls.deleteCustomer + "/" + obj.id,
+      data: JSON.stringify(obj)
+    })
+            .done((data) => {
+
+              $("#tr_" + obj.id).empty()
+              App.SweetAlert.showAlertSuccess('Đã xóa! Khách hàng ' +data.fullName)
+
+            })
+            .fail((error) => {
+              if (error.status == 403) {
+                App.SweetAlert.showAlertError("Xin lỗi, bạn không có quyền này!");
+              } else {
+                App.SweetAlert.showAlertError(App.AlertMessageVi.ERROR_500);
+              }
+
+            })
+  }
+
+
+  page.dialogs.elements.btnCreate.on("click", () => {
+    page.dialogs.elements.frmCreateCustomer.trigger("submit");
+  })
+  page.dialogs.elements.btnUpdate.on("click", () => {
+    page.dialogs.elements.frmUpdateCustomer.trigger("submit");
+  })
+
+  page.dialogs.elements.provinceCre.on("change", function() {
+    let provinceId = page.dialogs.elements.provinceCre.val();
+    page.commands.getAllDistricts(provinceId,"Cre").then( () => {
+      let districtId = page.dialogs.elements.districtCre.val();
+      page.commands.getAllWards(districtId,"Cre");
+    });
+
+  })
+  page.dialogs.elements.districtCre.on("change", function() {
+    let districtId = page.dialogs.elements.districtCre.val();
+    page.commands.getAllWards(districtId,"Cre");
+  })
+
+  page.dialogs.elements.provinceUp.on("change", function() {
+    let provinceId = page.dialogs.elements.provinceUp.val();
+
+    page.commands.getAllDistricts(provinceId,"Up").then( () => {
+      let districtId = page.dialogs.elements.districtUp.val();
+      page.commands.getAllWards(districtId,"Up");
+    });
+
+  })
+  page.dialogs.elements.districtUp.on("change", function() {
+    let districtId = page.dialogs.elements.districtUp.val();
+    page.commands.getAllWards(districtId,"Up");
+  })
+
   page.elements.btnShowCreateModal.on("click", () => {
     page.dialogs.elements.modalCreate.modal("show");
     page.dialogs.elements.btnClearImagePreview.trigger("click");
   })
+
   page.commands.handleShowUpdateModal = () => {
 
     $(".update").on("click", function () {
@@ -250,31 +409,56 @@
 
       let avatarUrl = App.SERVER_CLOUDINARY + App.SCALE_W250_H250_Q100 + "/" + avatarFolder + "/" + avatarFileName;
 
-      page.commands.getProductById(id).then((data) => {
-        product = data;
+      page.commands.getCustomerById(id).then((data) => {
+        customer = data;
+        locationRegion = customer.locationRegion;
 
-        page.dialogs.elements.titleUp.val(product.title);
-        page.dialogs.elements.priceUp.val(product.price);
-        page.dialogs.elements.quantityUp.val(product.quantity);
-        page.dialogs.elements.descriptionUp.val(product.description);
+        page.dialogs.elements.customerIdUp.val(id);
+        page.dialogs.elements.fullNameUp.val(customer.fullName);
+        page.dialogs.elements.emailUp.val(customer.email);
+        page.dialogs.elements.phoneUp.val(customer.phone);
+        page.dialogs.elements.addressUp.val(locationRegion.address);
 
         page.dialogs.commands.loadImageToCanvasUp(avatarUrl);
 
+        page.commands.getAllProvinces("Up").then(() => {
+          page.dialogs.elements.provinceUp.val(locationRegion.provinceId);
+
+          let provinceId = page.dialogs.elements.provinceUp.val();
+          page.commands.getAllDistricts(provinceId,"Up").then(() => {
+            page.dialogs.elements.districtUp.val(locationRegion.districtId);
+
+            let districtId = page.dialogs.elements.districtUp.val();
+            page.commands.getAllWards(districtId,"Up").then( () => {
+              page.dialogs.elements.wardUp.val(locationRegion.wardId);
+            })
+          });
+
+        }).catch( () => {
+          alert("Không tải được danh sách tỉnh")
+        })
+
         page.dialogs.elements.modalUpdate.modal("show");
 
-      }).catch(() => {
-          App.SweetAlert.showAlertError(App.AlertMessageVi.ERROR_404);
-        });
+      })
+              .catch(() => {
+                App.SweetAlert.showAlertError(App.AlertMessageVi.ERROR_404);
+              });
     })
   }
+  page.commands.removeEventShowUpdateModal = () => {
+    $(".update").off();
+  }
+
   page.commands.handleShowDeleteModal = () => {
     $(".delete").on("click", function () {
-      let id = $(this).data("id");
       this.blur();
-      page.commands.getProductById(id).then((data) => {
+      let id = $(this).data("id");
+
+      page.commands.getCustomerById(id).then((data) => {
         Swal.fire({
           title: 'Chắc chắn?',
-          text: "Xóa sản phẩm: " + data.title,
+          text: "Xóa khách hàng: " + data.fullName,
           icon: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
@@ -283,24 +467,53 @@
           cancelButtonText: 'Hủy!'
         }).then((result) => {
           if (result.isConfirmed) {
+            // Swal.fire(
+            //     'Đã xóa!',
+            //     'Khách hàng ' +data.fullName + ' đã bị xóa.',
+            //     'success'
+            // )
             data.deleted = 1;
-            page.commands.deleteProduct(data);
+            page.commands.deleteCustomer(data);
           }
         })
-      }).catch(() => {
-          App.SweetAlert.showAlertError(App.AlertMessageVi.ERROR_404);
-        });
+      })
+              .catch(() => {
+                App.SweetAlert.showAlertError(App.AlertMessageVi.ERROR_404);
+              });
     })
   }
+  page.commands.removeEventShowDeleteModal = () => {
+    $(".delete").off();
+  }
 
+  page.commands.handleEventShow = () => {
+    page.commands.handleShowUpdateModal();
+    page.commands.handleShowDeleteModal();
+    $(document).ready(function () {
+      $('[data-toggle="tooltip"]').tooltip();
+    });
+  }
+  page.commands.removeEventShow = () => {
+    page.commands.removeEventShowUpdateModal();
+    page.commands.removeEventShowDeleteModal();
+  }
 
-  page.dialogs.elements.btnCreate.on("click", () => {
-    page.dialogs.elements.frmCreateProduct.trigger("submit");
-  })
-  page.dialogs.elements.btnUpdate.on("click", () => {
-    page.dialogs.elements.frmUpdateProduct.trigger("submit");
-  })
+  page.dialogs.commands.handleCloseCreateModal = () => {
+    page.dialogs.alertDanger.modalCreate.removeClass("show").addClass("hide").empty();
+    page.dialogs.elements.frmCreateCustomer[0].reset();
+    page.dialogs.elements.frmCreateCustomer.validate().resetForm();
+  }
+  page.dialogs.commands.handleCloseUpdateModal = () => {
+    // page.dialogs.elements.frmUpdateCustomer.find("input.error").removeClass("error");
+    page.dialogs.alertDanger.modalUpdate.removeClass("show").addClass("hide").empty();
+    page.dialogs.elements.frmUpdateCustomer[0].reset();
+    page.dialogs.elements.frmUpdateCustomer.validate().resetForm();
+    page.dialogs.elements.clearImagePreviewUp();
+  }
 
+  $.validator.methods.email = function (value, element) {
+    return this.optional(element) || /^[A-Za-z0-9.]*[A-Za-z0-9]+@[A-Za-z0-9]+(\.[A-Za-z0-9]+).*$/.test(value);
+  }
   $.validator.addMethod(
           "regex",
           function(value, element, regexp) {
@@ -310,124 +523,163 @@
           "Please check your input."
   );
 
-
-  page.dialogs.elements.frmCreateProduct.validate({
+  page.dialogs.elements.frmCreateCustomer.validate({
     rules: {
-      titleCre: {
+      fullNameCre: {
+        required: true,
+        minlength: 3,
+        maxlength: 25
+      },
+      emailCre: {
+        required: true,
+        email: true
+      },
+      phoneCre: {
         required: true
       },
-      priceCre: {
+      addressCre: {
         required: true
-      },
-      quantityCre: {
-        required:true
       }
     },
     messages: {
-      titleCre: {
-        required: "Vui lòng nhập tên sản phẩm"
+      fullNameCre: {
+        required: "Họ tên là bắt buộc",
+        minlength: "Họ tên có độ dài tối thiếu là 3 ký tự",
+        maxlength: "Họ tên có độ dài tối đa là 25 ký tự"
       },
-      priceCre: {
-        required: "Vui lòng nhập giá sản phẩm"
+      emailCre: {
+        required: "Email là bắt buộc",
+        email: "Email không tồn tại"
       },
-      quantityCre: {
-        required: "Vui lòng nhập số lượng sản phẩm"
+      phoneCre: {
+        required: "Vui lòng nhập số điện thoại",
+      },
+      addressCre: {
+        required: "Vui lòng nhập địa chỉ"
       }
     },
     submitHandler: function () {
-      page.commands.createProduct();
+      // page.commands.createCustomer();
+      page.commands.createCustomerWithAvatar();
     }
   })
-  page.dialogs.elements.frmUpdateProduct.validate({
+  page.dialogs.elements.frmUpdateCustomer.validate({
     rules: {
-      titleUp: {
+      fullNameUp: {
+        required: true,
+        minlength: 3,
+        maxlength: 25
+      },
+      emailUp: {
+        required: true,
+        email: true
+      },
+      phoneUp: {
         required: true
       },
-      priceUp: {
+      addressUp: {
         required: true
-      },
-      quantityUp: {
-        required:true
       }
     },
     messages: {
-      titleUp: {
-        required: "Vui lòng nhập tên sản phẩm"
+      fullNameUp: {
+        required: "Họ tên là bắt buộc",
+        minlength: "Họ tên có độ dài tối thiếu là 3 ký tự",
+        maxlength: "Họ tên có độ dài tối đa là 25 ký tự"
       },
-      priceUp: {
-        required: "Vui lòng nhập giá sản phẩm"
+      emailUp: {
+        required: "Email là bắt buộc",
+        email: "Email không tồn tại"
       },
-      quantityUp: {
-        required: "Vui lòng nhập số lượng sản phẩm"
+      phoneUp: {
+        required: "Vui lòng nhập số điện thoại",
+      },
+      addressUp: {
+        required: "Vui lòng nhập địa chỉ"
       }
     },
     submitHandler: function () {
-      page.commands.updateProduct();
+      page.commands.updateCustomerWithAvatar();
+      // page.commands.updateCustomer();
     }
   })
 
-  page.commands.createProduct = () => {
+  page.commands.createCustomerWithAvatar = () => {
     page.elements.loader.removeClass("hide");
     page.dialogs.elements.btnCreate.prop('disabled', true);
 
     let formData = new FormData();
-    formData.append("title", page.dialogs.elements.titleCre.val().toString());
-    formData.append("price", toNumber(page.dialogs.elements.priceCre.val()).toString());
-    formData.append("quantity", toNumber(page.dialogs.elements.quantityCre.val()).toString());
-    formData.append("description", page.dialogs.elements.descriptionCre.val().toString());
-    formData.append("file", page.dialogs.elements.imageFile[0].files[0]);
+    formData.append("fullName", page.dialogs.elements.fullNameCre.val().toString());
+    formData.append("email", page.dialogs.elements.emailCre.val().toString());
+    formData.append("phone", page.dialogs.elements.phoneCre.val().toString());
+    if (page.dialogs.elements.imageFile[0].files[0] != undefined) {
+      formData.append("file", page.dialogs.elements.imageFile[0].files[0]);
+    }
 
-    page.dialogs.alertDanger.modalCreate.removeClass("show").addClass("hide").empty();
+    formData.append("provinceId", page.dialogs.elements.provinceCre.val().toString());
+    formData.append("provinceName", page.dialogs.elements.provinceCre.find("option:selected").text());
+    formData.append("districtId", page.dialogs.elements.districtCre.val().toString());
+    formData.append("districtName", page.dialogs.elements.districtCre.find("option:selected").text());
+    formData.append("wardId", page.dialogs.elements.wardCre.val().toString());
+    formData.append("wardName", page.dialogs.elements.wardCre.find("option:selected").text());
+    formData.append("address", page.dialogs.elements.addressCre.val().toString());
 
     $.ajax({
       type: "POST",
       contentType: false,
       cache: false,
       processData: false,
-      url: page.urls.createProduct,
+      url: page.urls.createCustomer,
       data: formData
     }).done((data) => {
-      let product = data;
-      let avatar = product.avatar;
-      let str = renderProduct(product,avatar);
-      page.elements.tbProductBody.prepend(str);
+      customer = data;
+      locationRegion = customer.locationRegion;
+      if (customer.avatarDTO.fileName === null) {
+        customer.avatarDTO.fileName = "default_ie77t2.png";
+        customer.avatarDTO.fileFolder = "avatar_images";
+      }
+      let avatar = customer.avatarDTO;
+      let str = renderCustomer(customer,locationRegion,avatar);
+      page.elements.tbCustomerBody.prepend(str);
       page.dialogs.elements.modalCreate.modal("hide");
 
       page.commands.removeEventShow();
       page.commands.handleEventShow();
       App.SweetAlert.showAlertSuccess(App.AlertMessageVi.SUCCESS_CREATED);
 
-    }).fail((jqXHR) => {
-      page.dialogs.alertDanger.modalCreate.removeClass("hide").addClass("show");
-      let errors = jqXHR.responseJSON;
-
-      if (errors) {
-        let str = "";
-        $.each(errors, (k, v) => {
-          str += `
-                            <li><label for="${k + 'Cre'}">${v}</label></li>
-                        `;
-        })
-
-        page.dialogs.alertDanger.modalCreate.append(str);
-      }
+    }).fail((err) => {
+      console.log(err)
+      alert(err)
     }).always(function () {
       page.elements.loader.addClass("hide");
       page.dialogs.elements.btnCreate.attr('disabled', false);
     });
   }
-  page.commands.updateProduct = () => {
+
+  page.commands.updateCustomerWithAvatar = () => {
+
     page.elements.loader.removeClass("hide");
     page.dialogs.elements.btnUpdate.prop('disabled', true);
 
     let formData = new FormData();
-    formData.append("title", page.dialogs.elements.titleUp.val().toString());
-    formData.append("price", toNumber(page.dialogs.elements.priceUp.val()).toString());
-    formData.append("quantity", toNumber(page.dialogs.elements.quantityUp.val()).toString());
-    formData.append("description", page.dialogs.elements.descriptionUp.val().toString());
+    formData.append("id", page.dialogs.elements.customerIdUp.val().toString());
+    formData.append("fullName", page.dialogs.elements.fullNameUp.val().toString());
+    formData.append("email", page.dialogs.elements.emailUp.val().toString());
+    formData.append("phone", page.dialogs.elements.phoneUp.val().toString());
+
     if (page.dialogs.elements.imageFileUp[0].files[0] != undefined) {
       formData.append("file", page.dialogs.elements.imageFileUp[0].files[0]);
     }
+
+    formData.append("deleted", false);
+
+    formData.append("provinceId", page.dialogs.elements.provinceUp.val().toString());
+    formData.append("provinceName", page.dialogs.elements.provinceUp.find("option:selected").text());
+    formData.append("districtId", page.dialogs.elements.districtUp.val().toString());
+    formData.append("districtName", page.dialogs.elements.districtUp.find("option:selected").text());
+    formData.append("wardId", page.dialogs.elements.wardUp.val().toString());
+    formData.append("wardName", page.dialogs.elements.wardUp.find("option:selected").text());
+    formData.append("address", page.dialogs.elements.addressUp.val().toString());
 
     page.dialogs.alertDanger.modalUpdate.removeClass("show").addClass("hide").empty();
     $.ajax({
@@ -435,63 +687,43 @@
       contentType: false,
       cache: false,
       processData: false,
-      url:page.urls.updateProduct + "/" + product.id,
+      url:page.urls.updateCustomer + "/" + customer.id,
       data: formData
     })
-      .done((data) => {
+            .done((data) => {
 
-        product = data;
-        let avatar = product.avatar;
-        let str = renderProduct(product, avatar);
+              customer = data;
+              locationRegion = customer.locationRegion;
+              if (customer.avatarDTO.fileName === null) {
+                customer.avatarDTO.fileName = "default_ie77t2.png";
+                customer.avatarDTO.fileFolder = "avatar_images";
+              }
+              let avatar = customer.avatarDTO;
+              let str = renderCustomer(customer,locationRegion,avatar);
 
-        $("#tr_" + product.id).replaceWith(str);
+              $("#tr_" + customer.id).replaceWith(str);
 
-        page.dialogs.elements.modalUpdate.modal("hide");
-        page.commands.removeEventShow();
-        page.commands.handleEventShow();
-        App.SweetAlert.showAlertSuccess(App.AlertMessageVi.SUCCESS_UPDATED);
-      })
-      .fail((jqXHR) => {
-        page.dialogs.alertDanger.modalUpdate.removeClass("hide").addClass("show");
-        let errors = jqXHR.responseJSON;
-        if (errors) {
-          let str = "";
-          $.each(errors, (k, v) => {
-            str += `
-                      <li><label for="${k + 'Up'}">${v}</label></li>
-                  `;
-          })
+              page.dialogs.elements.modalUpdate.modal("hide");
+              page.commands.removeEventShow();
+              page.commands.handleEventShow();
+              App.SweetAlert.showAlertSuccess(App.AlertMessageVi.SUCCESS_UPDATED);
+            })
+            .fail((jqXHR) => {
+              let errors = jqXHR.responseJSON;
+              if (errors) {
+                let str = "";
+                $.each(errors, (k, v) => {
+                  str += `
+                            <li><label for="${k + 'Up'}">${v}</label></li>
+                        `;
+                })
 
-          page.dialogs.alertDanger.modalUpdate.append(str);
-        }
-      }).always(function () {
-        page.elements.loader.addClass("hide");
-        page.dialogs.elements.btnUpdate.attr('disabled', false);
+                page.dialogs.alertDanger.modalUpdate.append(str);
+              }
+            }).always(function () {
+      page.elements.loader.addClass("hide");
+      page.dialogs.elements.btnUpdate.attr('disabled', false);
     });
-  }
-  page.commands.deleteProduct = (obj) => {
-    $.ajax({
-      headers: {
-        "accept": "application/json",
-        "content-type": "application/json"
-      },
-      type: "PATCH",
-      url: page.urls.deleteProduct + "/" + obj.id,
-      data: JSON.stringify(obj)
-    }).done((data) => {
-
-        $("#tr_" + obj.id).empty()
-        App.SweetAlert.showAlertSuccess('Đã xóa! Sản phẩm ' +data.title)
-
-      })
-      .fail((error) => {
-        if (error.status == 403) {
-          App.SweetAlert.showAlertError("Xin lỗi, bạn không có quyền này!");
-        } else {
-          App.SweetAlert.showAlertError(App.AlertMessageVi.ERROR_500);
-        }
-
-      })
   }
 
   page.dialogs.commands.loadImageToCanvas = (imageFile) => {
@@ -548,6 +780,7 @@
 
     return (event === "load") ? (imageObj.src = imageFile) : (imageObj.src = URL.createObjectURL(imageFile));
 
+    // imageObj.src = URL.createObjectURL(imageFile)
   }
   page.dialogs.commands.changeImagePreviewUp = () => {
     let imageFile = page.dialogs.elements.imageFileUp[0].files[0];
@@ -573,44 +806,21 @@
     page.dialogs.elements.wrapperContentUp.css("opacity", 1);
   }
 
-  page.commands.removeEventShowUpdateModal = () => {
-    $(".update").off();
-  }
-  page.commands.removeEventShowDeleteModal = () => {
-    $(".delete").off();
-  }
-
-  page.commands.handleEventShow = () => {
-    page.commands.handleShowDeleteModal();
-    page.commands.handleShowUpdateModal();
-    $(document).ready(function () {
-      $('[data-toggle="tooltip"]').tooltip();
-    });
-  }
-  page.commands.removeEventShow = () => {
-    page.commands.removeEventShowUpdateModal();
-    page.commands.removeEventShowDeleteModal();
-  }
-
-  page.dialogs.commands.handleCloseCreateModal = () => {
-    page.dialogs.alertDanger.modalCreate.removeClass("show").addClass("hide").empty();
-    page.dialogs.elements.frmCreateProduct[0].reset();
-    page.dialogs.elements.frmCreateProduct.validate().resetForm();
-  }
-  page.dialogs.commands.handleCloseUpdateModal = () => {
-    page.dialogs.alertDanger.modalUpdate.removeClass("show").addClass("hide").empty();
-    page.dialogs.elements.frmUpdateProduct[0].reset();
-    page.dialogs.elements.frmUpdateProduct.validate().resetForm();
-    page.dialogs.elements.clearImagePreviewUp();
-  }
-
 
   page.commands.loadData = () => {
-    page.commands.getAllProducts();
+    page.commands.getAllCustomers();
 
+    page.commands.getAllProvinces("Cre").then(() => {
+      let provinceId = page.dialogs.elements.provinceCre.val();
+      page.commands.getAllDistricts(provinceId,"Cre").then(() => {
+        let districtId = page.dialogs.elements.districtCre.val();
+        page.commands.getAllWards(districtId,"Cre");
+      });
+    })
   }
 
   page.initializeEventControl = () => {
+
     page.dialogs.elements.modalCreate.on("hidden.bs.modal", function () {
       page.dialogs.commands.handleCloseCreateModal();
     });
@@ -637,6 +847,7 @@
     page.dialogs.elements.btnClearImagePreviewUp.on("click", function () {
       page.dialogs.elements.clearImagePreviewUp();
     });
+
   }
 
 
