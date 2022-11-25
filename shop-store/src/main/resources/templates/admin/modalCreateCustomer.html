@@ -1,0 +1,92 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<th:block th:fragment="modalCreateCustomer">
+    <div class="modal fade" id="modalCreate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Modal create</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="frmCreateCustomer" method="post" class="row">
+                        <div class="col-lg-9 fl">
+                            <div class="row col-lg-12 mt-3">
+                                <div class="col-lg-4">
+                                    <label>Full Name</label>
+                                    <input type="text" id="fullNameCre" name="fullNameCre" class="form-control">
+                                </div>
+                                <div class="col-lg-4">
+                                    <label>Email</label>
+                                    <input type="email" id="emailCre" name="emailCre" class="form-control">
+                                </div>
+                                <div class="col-lg-4">
+                                    <label>Phone</label>
+                                    <input type="tel" id="phoneCre" name="phoneCre" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row col-lg-12 mt-3">
+                                <div class="col-lg-6">
+                                    <label>Province</label>
+                                    <select name="provinceCre" id="provinceCre" class="form-control">
+                                    </select>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label>District</label>
+                                    <select name="districtCre" id="districtCre" class="form-control">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row col-lg-12 mt-3">
+                                <div class="col-lg-6">
+                                    <label>Ward</label>
+                                    <select name="wardCre" id="wardCre" class="form-control">
+                                    </select>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label>Address</label>
+                                    <input type="text" id="addressCre" name="addressCre" class="form-control">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-3 fl">
+                            <section>
+                                <div class="wrapper">
+                                    <div class="image-preview">
+                                        <canvas id="canvas" style="display: none;" width="4094" height="2048"></canvas>
+                                    </div>
+                                    <div class="content" style="opacity: 1;">
+                                        <div class="icon">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                        </div>
+                                        <div class="text">
+                                            No file chosen, yet!
+                                        </div>
+                                        <div class="text">
+                                            Max file size = 2MB
+                                        </div>
+                                    </div>
+                                    <div class="clear-image-preview">
+                                        <i class="fas fa-times"></i>
+                                    </div>
+                                    <div class="file-name">
+                                        Change image
+                                    </div>
+                                </div>
+                                <input type="file" id="imageFile" accept="image/jpeg, image/png" hidden="">
+                            </section>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="btnCreate" class="btn btn-primary">
+                        <i class="fas fa-plus"></i>
+                        Create
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>

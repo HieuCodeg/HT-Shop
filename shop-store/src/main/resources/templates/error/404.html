@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+    <style>
+        body {
+            font-size: 1.4rem;
+        }
+        p {
+            line-height: 1.5;
+            margin: 0 0 1.25em 0;
+        }
+        #site-content {
+            display: block;
+            padding: 1rem 4rem 0 4rem;
+        }
+        .sans-excerpt {
+            word-wrap: break-word;
+        }
+        .go-home {
+            color: #69737D;
+            font-size: .95em;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .go-home:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div id="site-content">
+        <h1 th:text="${errorMsg}"></h1>
+        <p class="sans-excerpt">
+            The page you're looking for could not be found. It may have been removed, renamed, or maybe it didn't exist in the first place. You can return to the home page through the link.
+        </p>
+        <a class="go-home" href="/">To the home page →</a>
+    </div>
+
+</body>
+</html>

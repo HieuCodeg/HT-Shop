@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+
+.wrappers{
+    position: relative;
+    height: 250px;
+    width: 90%;
+    border-radius: 10px;
+    background: #fff;
+    border: 2px dashed #c2cdda;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    cursor: pointer;
+}
+.wrappers.active{
+    border: none;
+}
+
+.wrappers.active:hover > .clear-image-preview i{
+    display: block;
+}
+
+.wrappers .clear-image-preview i:hover{
+    color: #e74c3c;
+}
+
+.wrappers .image-preview{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wrappers .content {
+    text-align: center;
+}
+
+.wrappers img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.wrappers .icon{
+    font-size: 100px;
+    color: #9658fe;
+}
+
+.wrappers .text{
+    font-size: 20px;
+    font-weight: 500;
+    color: #5B5B7B;
+}
+
+.clear-image-preview i{
+    position: absolute;
+    font-size: 20px;
+    right: 15px;
+    top: 15px;
+    color: #9658fe;
+    cursor: pointer;
+    display: none;
+}
+
+.wrappers .file-name{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 8px 0;
+    font-size: 18px;
+    color: #fff;
+    text-align: center;
+    display: none;
+    background: linear-gradient(135deg,#3a8ffe 0%,#9658fe 100%);
+}
+
+.wrappers.active:hover .file-name{
+    display: block;
+}
+
+.main-container #custom-btn{
+    margin-top: 30px;
+    display: block;
+    width: 100%;
+    height: 50px;
+    border: none;
+    outline: none;
+    border-radius: 25px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: linear-gradient(135deg,#3a8ffe 0%,#9658fe 100%);
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}

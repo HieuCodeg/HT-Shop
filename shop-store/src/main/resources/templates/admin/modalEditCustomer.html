@@ -1,0 +1,91 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<th:block th:fragment="modalEditCustomer">
+    <div class="modal fade" id="modalUpdate" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header modal-header-update">
+                    <h1 class="modal-title fs-5"  >Modal update</h1>
+                    <button type="button" class="btn-close btn-close-white btnClose" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide"></div>
+                    <form id="frmUpdateCustomer" method="post" class="row">
+                        <div class="col-lg-9 fl">
+                            <div class="row col-lg-12 mt-3">
+                                <input type="hidden" id="customerIdUp">
+                                <div class="col-md-4">
+                                    <label class="form-label">Full name</label>
+                                    <input type="text" class="form-control" id="fullNameUp" name="fullNameUp">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Email</label>
+                                    <input type="text" class="form-control" id="emailUp" name="emailUp">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Phone</label>
+                                    <input type="tel" class="form-control" id="phoneUp" name="phoneUp">
+                                </div>
+                            </div>
+                            <div class="row col-lg-12 mt-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Province</label>
+                                    <select class="form-select" id="provinceUp" name="provinceUp"></select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">District</label>
+                                    <select class="form-select" id="districtUp" name="districtUp"></select>
+                                </div>
+                            </div>
+                            <div class="row col-lg-12 mt-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Ward</label>
+                                    <select class="form-select" id="wardUp" name="wardUp"></select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Address</label>
+                                    <input type="text" class="form-control valid" id="addressUp" name="addressUp">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 fl">
+                            <section>
+                                <div class="wrapper">
+                                    <div class="image-preview">
+                                        <canvas id="canvasUp" style="display: none;" width="4094" height="2048"></canvas>
+                                    </div>
+                                    <div class="content" style="opacity: 1;">
+                                        <div class="icon">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                        </div>
+                                        <div class="text">
+                                            No file chosen, yet!
+                                        </div>
+                                        <div class="text">
+                                            Max file size = 2MB
+                                        </div>
+                                    </div>
+                                    <div class="clear-image-preview">
+                                        <i class="fas fa-times"></i>
+                                    </div>
+                                    <div class="file-name">
+                                        Change image
+                                    </div>
+                                </div>
+                                <input type="file" id="imageFileUp" accept="image/jpeg, image/png" hidden="">
+                            </section>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" id="btnUpdate" class="btn btn-outline-primary">
+                        <i class="fas fa-edit"></i>
+                        Update
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
