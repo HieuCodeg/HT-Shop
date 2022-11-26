@@ -4,16 +4,15 @@ import com.hieucodeg.exception.DataInputException;
 import com.hieucodeg.exception.EmailExistsException;
 import com.hieucodeg.model.Customer;
 import com.hieucodeg.model.LocationRegion;
-import com.hieucodeg.model.dto.AvatarDTO;
-import com.hieucodeg.model.dto.CustomerAvartasDTO;
-import com.hieucodeg.model.dto.CustomerAvatarCreateDTO;
-import com.hieucodeg.model.dto.CustomerAvatarUpdateDTO;
+import com.hieucodeg.model.dto.*;
 import com.hieucodeg.repository.AvatarRepository;
 import com.hieucodeg.service.customer.ICustomerService;
 import com.hieucodeg.utils.AppUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -52,7 +51,7 @@ public class CustomerAPI {
             throw new DataInputException("ID khách hàng không hợp lệ");
         }
 
-        return new ResponseEntity<>(customerOptional.get().toCustomerDTO(), HttpStatus.OK);
+        return new ResponseEntity<>(customerOptional.get().toCustomerAvartasDTO(), HttpStatus.OK);
     }
 
     @PatchMapping("/customers/delete/{customerId}")
@@ -68,11 +67,16 @@ public class CustomerAPI {
         customer.setDeleted(true);
         customerService.save(customer);
 
-        return new ResponseEntity<>(customerOptional.get().toCustomerDTO(), HttpStatus.OK);
+        return new ResponseEntity<>(customerOptional.get().toCustomerAvartasDTO(), HttpStatus.OK);
     }
 
     @PostMapping("/customers")
-    public ResponseEntity<?> create(@ModelAttribute CustomerAvatarCreateDTO customerAvatarCreateDTO) {
+    public ResponseEntity<?> create(@Validated @ModelAttribute CustomerAvatarCreateDTO customerAvatarCreateDTO, BindingResult bindingResult) {
+
+        new CustomerAvatarCreateDTO().validate(customerAvatarCreateDTO, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return appUtils.mapErrorToResponse(bindingResult);
+        }
 
         LocationRegion locationRegion = new LocationRegion();
         locationRegion.setId(0L);
@@ -95,16 +99,17 @@ public class CustomerAPI {
             newCustomer.setAvatarDTO(new AvatarDTO());
         }
 
-
-
         return new ResponseEntity<>(newCustomer, HttpStatus.CREATED);
     }
 
-    @PatchMapping("/customers/{customerIdStr}")
-    public ResponseEntity<?> update(@PathVariable Long customerIdStr,@ModelAttribute CustomerAvatarUpdateDTO customerAvatarUpdateDTO) {
+    @PatchMapping("/customers/{customerId}")
+    public ResponseEntity<?> update(@PathVariable Long customerId,@Validated @ModelAttribute CustomerAvatarCreateDTO customerAvatarUpdateDTO, BindingResult bindingResult) {
 
+        new CustomerAvatarCreateDTO().validate(customerAvatarUpdateDTO, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return appUtils.mapErrorToResponse(bindingResult);
+        }
 
-        Long customerId = customerIdStr;
         Optional<Customer> customerOptional = customerService.findById(customerId);
 
         if (!customerOptional.isPresent()) {
@@ -134,7 +139,6 @@ public class CustomerAPI {
         locationRegion.setAddress(customerAvatarUpdateDTO.getAddress());
 
         customer.setLocationRegion(locationRegion);
-        customer.setDeleted(customerAvatarUpdateDTO.getDeleted());
         AvatarDTO avatarDTO = new AvatarDTO();
         try {
             avatarDTO = avatarRepository.getAvatarByCustomer_Id(customerId).toAvatarDTO();

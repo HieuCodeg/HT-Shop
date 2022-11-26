@@ -1,7 +1,7 @@
 package com.hieucodeg.model;
 
 
-import com.hieucodeg.model.dto.CustomerAvartasDTO;
+import com.hieucodeg.model.dto.StaffDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,13 +9,14 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name = "customers")
-public class Customer extends BaseEntity{
+@Table(name = "staffs")
+public class Staff extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,15 +34,14 @@ public class Customer extends BaseEntity{
     @JoinColumn(name = "location_region_id", referencedColumnName = "id", nullable = false)
     private LocationRegion locationRegion;
 
-    public CustomerAvartasDTO toCustomerAvartasDTO() {
-        return new CustomerAvartasDTO()
+    public StaffDTO toStaffDTO() {
+        return new StaffDTO()
                 .setId(id)
                 .setFullName(fullName)
                 .setEmail(email)
                 .setPhone(phone)
                 .setLocationRegion(locationRegion.toLocationRegionDTO());
     }
-
 
 
 }

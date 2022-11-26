@@ -330,6 +330,20 @@
         required: "Vui lòng nhập số lượng sản phẩm"
       }
     },
+    errorLabelContainer: "#modalCreate .modal-body .modal-alert-danger",
+    errorElement : "li",
+    errorPlacement: function (error, element) {
+      error.appendTo("#modalCreate .modal-body .modal-alert-danger");
+    },
+    showErrors: function(errorMap, errorList) {
+      if (this.numberOfInvalids() > 0) {
+        $("#modalCreate .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+      } else {
+        $("#modalCreate .modal-body .modal-alert-danger").removeClass("show").addClass("hide").empty();
+        $("#frmCreateProduct input.error").removeClass("error");
+      }
+      this.defaultShowErrors();
+    },
     submitHandler: function () {
       page.commands.createProduct();
     }
@@ -356,6 +370,20 @@
       quantityUp: {
         required: "Vui lòng nhập số lượng sản phẩm"
       }
+    },
+    errorLabelContainer: "#modalUpdate .modal-body .modal-alert-danger",
+    errorElement : "li",
+    errorPlacement: function (error, element) {
+      error.appendTo("#modalUpdate .modal-body .modal-alert-danger");
+    },
+    showErrors: function(errorMap, errorList) {
+      if (this.numberOfInvalids() > 0) {
+        $("#modalUpdate .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+      } else {
+        $("#modalUpdate .modal-body .modal-alert-danger").removeClass("show").addClass("hide").empty();
+        $("#frmUpdateProduct input.error").removeClass("error");
+      }
+      this.defaultShowErrors();
     },
     submitHandler: function () {
       page.commands.updateProduct();

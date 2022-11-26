@@ -1,7 +1,7 @@
 package com.hieucodeg.repository;
 
-import com.hieucodeg.model.Customer;
-import com.hieucodeg.model.dto.CustomerAvartasDTO;
+import com.hieucodeg.model.Staff;
+import com.hieucodeg.model.dto.StaffDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -11,9 +11,9 @@ import java.util.Optional;
 
 
 @Repository
-public interface CustomerRepository extends JpaRepository<Customer, Long> {
+public interface StaffRepository extends JpaRepository<Staff, Long> {
 
-    @Query("SELECT NEW com.hieucodeg.model.dto.CustomerAvartasDTO(" +
+    @Query("SELECT NEW com.hieucodeg.model.dto.StaffDTO(" +
                 "c.id, " +
                 "c.fullName, " +
                 "c.email, " +
@@ -26,14 +26,14 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
                 "a.cloudId, " +
                 "a.fileType " +
                 ") " +
-            "FROM Customer AS c " +
-            "LEFT JOIN Avatar AS a " +
-            "ON a.customer = c " +
+            "FROM Staff AS c " +
+            "LEFT JOIN StaffAvatar AS a " +
+            "ON a.staff = c " +
             "WHERE c.deleted = false"
     )
-    List<CustomerAvartasDTO> getAllCustomersAvartaDTO();
+    List<StaffDTO> getAllStaffDTO();
 
-    @Query("SELECT NEW com.hieucodeg.model.dto.CustomerAvartasDTO(" +
+    @Query("SELECT NEW com.hieucodeg.model.dto.StaffDTO(" +
             "c.id, " +
             "c.fullName, " +
             "c.email, " +
@@ -46,16 +46,16 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
             "a.cloudId, " +
             "a.fileType " +
             ") " +
-            "FROM Customer AS c " +
-            "LEFT JOIN Avatar AS a " +
-            "ON a.customer = c " +
+            "FROM Staff AS c " +
+            "LEFT JOIN StaffAvatar AS a " +
+            "ON a.staff = c " +
             "WHERE c.deleted = false and c.id = :id"
     )
-    CustomerAvartasDTO getCustomersAvartaDTOById(Long id);
+    StaffDTO getStaffDTOById(Long id);
 
-    List<Customer> findAllByIdNot(Long senderId);
-    Optional<Customer> findByEmail(String email);
-    Optional<Customer> findByEmailAndIdIsNot(String email, Long id);
-    List<Customer> findAllByDeletedIsFalse();
+    List<Staff> findAllByIdNot(Long senderId);
+    Optional<Staff> findByEmail(String email);
+    Optional<Staff> findByEmailAndIdIsNot(String email, Long id);
+    List<Staff> findAllByDeletedIsFalse();
 
 }

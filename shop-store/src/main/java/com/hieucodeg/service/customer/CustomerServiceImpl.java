@@ -6,7 +6,6 @@ import com.hieucodeg.model.Customer;
 import com.hieucodeg.model.LocationRegion;
 import com.hieucodeg.model.dto.AvatarDTO;
 import com.hieucodeg.model.dto.CustomerAvartasDTO;
-import com.hieucodeg.model.dto.CustomerDTO;
 import com.hieucodeg.model.enums.FileType;
 import com.hieucodeg.repository.AvatarRepository;
 import com.hieucodeg.repository.CustomerRepository;
@@ -67,12 +66,6 @@ public class CustomerServiceImpl implements ICustomerService {
     @Override
     public void remove(Long id) {
 
-    }
-
-
-    @Override
-    public List<Customer> findAllByIdNot(Long senderId) {
-        return customerRepository.findAllByIdNot(senderId);
     }
 
     @Override

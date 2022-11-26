@@ -2,7 +2,6 @@ package com.hieucodeg.repository;
 
 
 import com.hieucodeg.model.Role;
-import com.hieucodeg.model.dto.CustomerDTO;
 import com.hieucodeg.model.dto.RoleDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

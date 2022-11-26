@@ -9,43 +9,65 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <div class="modal-alert-danger hide"></div>
                     <form id="frmCreateCustomer" method="post" class="row">
                         <div class="col-lg-9 fl">
                             <div class="row col-lg-12 mt-3">
                                 <div class="col-lg-4">
                                     <label>Full Name</label>
-                                    <input type="text" id="fullNameCre" name="fullNameCre" class="form-control">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-user-pen"></i></span>
+                                        </div>
+                                        <input type="text" id="fullNameCre" name="fullNameCre" class="form-control">
+                                    </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <label>Email</label>
-                                    <input type="email" id="emailCre" name="emailCre" class="form-control">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                        </div>
+                                        <input type="email" id="emailCre" name="emailCre" class="form-control">
+                                    </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <label>Phone</label>
-                                    <input type="tel" id="phoneCre" name="phoneCre" class="form-control">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                        </div>
+                                        <input type="tel" id="phoneCre" name="phoneCre" class="form-control">
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="row col-lg-12 mt-3">
                                 <div class="col-lg-6">
                                     <label>Province</label>
-                                    <select name="provinceCre" id="provinceCre" class="form-control">
+                                    <select name="provinceCre" id="provinceCre" class="form-control form-select">
                                     </select>
                                 </div>
                                 <div class="col-lg-6">
                                     <label>District</label>
-                                    <select name="districtCre" id="districtCre" class="form-control">
+                                    <select name="districtCre" id="districtCre" class="form-control form-select">
                                     </select>
                                 </div>
                             </div>
                             <div class="row col-lg-12 mt-3">
                                 <div class="col-lg-6">
                                     <label>Ward</label>
-                                    <select name="wardCre" id="wardCre" class="form-control">
+                                    <select name="wardCre" id="wardCre" class="form-control form-select">
                                     </select>
                                 </div>
                                 <div class="col-lg-6">
                                     <label>Address</label>
-                                    <input type="text" id="addressCre" name="addressCre" class="form-control">
+                                    <div class="input-group">
+                                        <input type="text" id="addressCre" name="addressCre" class="form-control">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text"><i class="fas fa-ambulance"></i></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 

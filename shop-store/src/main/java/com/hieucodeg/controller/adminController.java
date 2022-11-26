@@ -49,4 +49,16 @@ public class adminController {
 
         return modelAndView;
     }
+
+    @GetMapping("/staffs")
+    public ModelAndView showStaffPage() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin/staffs");
+
+        String username = appUtils.getPrincipalUsername();
+
+        modelAndView.addObject("username", username);
+
+        return modelAndView;
+    }
 }

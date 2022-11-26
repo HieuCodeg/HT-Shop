@@ -2,6 +2,7 @@ package com.hieucodeg.model.dto;
 
 import com.hieucodeg.model.Customer;
 import com.hieucodeg.model.LocationRegion;
+import com.hieucodeg.model.Staff;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,14 +15,13 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
-import java.math.BigDecimal;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Accessors(chain = true)
-public class CustomerAvatarCreateDTO implements Validator {
+public class StaffCreateDTO implements Validator {
 
     private Long id;
     private String fullName;
@@ -51,8 +51,8 @@ public class CustomerAvatarCreateDTO implements Validator {
 
     private String address;
 
-    public Customer toCustomer(LocationRegion locationRegion){
-        return new Customer()
+    public Staff toStaff(LocationRegion locationRegion){
+        return new Staff()
                 .setId(id)
                 .setFullName(fullName)
                 .setEmail(email)
@@ -62,14 +62,14 @@ public class CustomerAvatarCreateDTO implements Validator {
 
     @Override
     public boolean supports(Class<?> aClass) {
-        return CustomerAvatarCreateDTO.class.isAssignableFrom(aClass);
+        return StaffCreateDTO.class.isAssignableFrom(aClass);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
-        CustomerAvatarCreateDTO customerAvatarCreateDTO = (CustomerAvatarCreateDTO) target;
+        StaffCreateDTO staffCreateDTO = (StaffCreateDTO) target;
 
-        String fullName = customerAvatarCreateDTO.getFullName();
+        String fullName = staffCreateDTO.getFullName();
 
         if (fullName.isEmpty()) {
             errors.rejectValue("fullName", "","Họ tên chưa được nhập");
