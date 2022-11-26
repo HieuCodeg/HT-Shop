@@ -1,12 +1,9 @@
 package com.hieucodeg.controller.api;
 
 import com.hieucodeg.exception.DataInputException;
-import com.hieucodeg.exception.EmailExistsException;
-import com.hieucodeg.model.Customer;
-import com.hieucodeg.model.LocationRegion;
 import com.hieucodeg.model.Product;
-import com.hieucodeg.model.ProductAvatar;
-import com.hieucodeg.model.dto.*;
+import com.hieucodeg.model.dto.ProductCreateDTO;
+import com.hieucodeg.model.dto.ProductDTO;
 import com.hieucodeg.service.product.IProductService;
 import com.hieucodeg.utils.AppUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;

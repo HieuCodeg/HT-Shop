@@ -5,7 +5,7 @@
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5">Modal create</h1>
+                    <h1 class="modal-title fs-5">Thêm khách hàng</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -14,7 +14,7 @@
                         <div class="col-lg-9 fl">
                             <div class="row col-lg-12 mt-3">
                                 <div class="col-lg-4">
-                                    <label>Full Name</label>
+                                    <label>Họ và tên</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-user-pen"></i></span>
@@ -32,7 +32,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
-                                    <label>Phone</label>
+                                    <label>Số điện thoại</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-phone"></i></span>
@@ -44,24 +44,24 @@
                             </div>
                             <div class="row col-lg-12 mt-3">
                                 <div class="col-lg-6">
-                                    <label>Province</label>
+                                    <label>Tỉnh</label>
                                     <select name="provinceCre" id="provinceCre" class="form-control form-select">
                                     </select>
                                 </div>
                                 <div class="col-lg-6">
-                                    <label>District</label>
+                                    <label>Huyện</label>
                                     <select name="districtCre" id="districtCre" class="form-control form-select">
                                     </select>
                                 </div>
                             </div>
                             <div class="row col-lg-12 mt-3">
                                 <div class="col-lg-6">
-                                    <label>Ward</label>
+                                    <label>Xã</label>
                                     <select name="wardCre" id="wardCre" class="form-control form-select">
                                     </select>
                                 </div>
                                 <div class="col-lg-6">
-                                    <label>Address</label>
+                                    <label>Địa chỉ</label>
                                     <div class="input-group">
                                         <input type="text" id="addressCre" name="addressCre" class="form-control">
                                         <div class="input-group-append">
@@ -83,17 +83,17 @@
                                             <i class="fas fa-cloud-upload-alt"></i>
                                         </div>
                                         <div class="text">
-                                            No file chosen, yet!
+                                            Clik để chọn ảnh!
                                         </div>
                                         <div class="text">
-                                            Max file size = 2MB
+                                            Kích thước tối đa = 2MB
                                         </div>
                                     </div>
                                     <div class="clear-image-preview">
                                         <i class="fas fa-times"></i>
                                     </div>
                                     <div class="file-name">
-                                        Change image
+                                        Đổi ảnh
                                     </div>
                                 </div>
                                 <input type="file" id="imageFile" accept="image/jpeg, image/png" hidden="">
@@ -102,10 +102,10 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" id="btnCreate" class="btn btn-primary">
+                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Hủy bỏ</button>
+                    <button type="button" id="btnCreate" class="btn btn-outline-primary">
                         <i class="fas fa-plus"></i>
-                        Create
+                        Thêm mới
                     </button>
                 </div>
             </div>

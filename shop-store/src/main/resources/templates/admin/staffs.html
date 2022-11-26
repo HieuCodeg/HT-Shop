@@ -17,7 +17,7 @@
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  <th:block th:replace="/layout/admin/customers/sidebar :: sidebar"/>
+  <th:block th:replace="/layout/admin/staff/sidebar :: sidebar"/>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -26,7 +26,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>KHÁCH HÀNG</h1>
+            <h1>NHÂN VIÊN</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -46,30 +46,36 @@
 
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Danh sách khách hàng của cửa hàng bạn</h3>
-                <input id="btnShowCreateModal" type="submit" value="Thêm mới khách hàng"
+                <h3 class="card-title">Danh sách nhân viên</h3>
+                <input id="btnShowCreateModal" type="submit" value="Thêm mới nhân viên"
                        class="btn btn-outline-info float-right" title="Create" data-toggle="tooltip">
               </div>
 
               <!-- /.card-header -->
-              <div class="card-body">
-                <table id="tbCustomer" class="table table-bordered table-hover dataTable-table">
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Ảnh</th>
-                      <th>Họ và tên</th>
-                      <th>Email</th>
-                      <th>Điện thoại</th>
-                      <th>Tỉnh</th>
-                      <th>Huyện</th>
-                      <th>Xã</th>
-                      <th>Địa chỉ</th>
-                      <th colspan="2">Thao tác</th>
-                    </tr>
-                  </thead>
-                  <tbody></tbody>
-                </table>
+              <!-- Default box -->
+              <div class="card card-solid">
+                <div class="card-body pb-0">
+                  <div class="row" id="bodyContent">
+
+
+                  </div>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                  <nav aria-label="Contacts Page Navigation">
+                    <ul class="pagination justify-content-center m-0">
+                      <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                      <li class="page-item"><a class="page-link" href="#">2</a></li>
+                      <li class="page-item"><a class="page-link" href="#">3</a></li>
+                      <li class="page-item"><a class="page-link" href="#">4</a></li>
+                      <li class="page-item"><a class="page-link" href="#">5</a></li>
+                      <li class="page-item"><a class="page-link" href="#">6</a></li>
+                      <li class="page-item"><a class="page-link" href="#">7</a></li>
+                      <li class="page-item"><a class="page-link" href="#">8</a></li>
+                    </ul>
+                  </nav>
+                </div>
+                <!-- /.card-footer -->
               </div>
               <!-- /.card-body -->
             </div>
@@ -93,9 +99,9 @@
 <!-- ./wrapper -->
 
 <!--Create Modal -->
-<th:block th:replace="/admin/modalCreateCustomer :: modalCreateCustomer"/>
+<th:block th:replace="/admin/modalCreateStaff :: modalCreateStaff"/>
 <!--Update Modal -->
-<th:block th:replace="/admin/modalEditCustomer :: modalEditCustomer"/>
+<th:block th:replace="/admin/modalUpdateStaff :: modalUpdateStaff"/>
 
 
 <th:block th:replace="/layout/admin/products/scriptProducts :: scriptProducts"/>
@@ -105,12 +111,12 @@
 <script>
   const page = {
     urls: {
-      getAllCustomers: App.CUSTOMER_API,
-      getCustomerById: App.CUSTOMER_API,
-      createCustomer: App.CUSTOMER_API,
-      updateCustomer: App.CUSTOMER_API,
+      getAllStaffs: App.STAFF_API,
+      getStaffById: App.STAFF_API,
+      createStaff: App.STAFF_API,
+      updateStaff: App.STAFF_API,
 
-      deleteCustomer: App.CUSTOMER_API + "/delete",
+      deleteStaff: App.STAFF_API + "/delete",
 
       getAllProvinces: App.PROVINCE_API,
       getAllDistricts: App.DISTRICT_API,
@@ -132,11 +138,10 @@
   page.elements.loader = $(".loader");
 
   page.elements.btnShowCreateModal = $("#btnShowCreateModal");
-  page.elements.tbCustomer = $("#tbCustomer");
-  page.elements.tbCustomerBody = $("#tbCustomer tbody");
+  page.elements.bodyContent = $("#bodyContent");
 
   page.dialogs.elements.modalCreate = $("#modalCreate");
-  page.dialogs.elements.frmCreateCustomer = $("#frmCreateCustomer");
+  page.dialogs.elements.frmCreateStaff = $("#frmCreateStaff");
   page.dialogs.elements.fullNameCre = $("#fullNameCre");
   page.dialogs.elements.emailCre = $("#emailCre");
   page.dialogs.elements.phoneCre = $("#phoneCre");
@@ -148,8 +153,8 @@
   page.dialogs.elements.addressCre = $("#addressCre");
 
   page.dialogs.elements.modalUpdate = $("#modalUpdate");
-  page.dialogs.elements.frmUpdateCustomer = $("#frmUpdateCustomer");
-  page.dialogs.elements.customerIdUp = $("#customerIdUp");
+  page.dialogs.elements.frmUpdateStaff = $("#frmUpdateStaff");
+  page.dialogs.elements.staffIdUp = $("#staffIdUp");
   page.dialogs.elements.fullNameUp = $("#fullNameUp");
   page.dialogs.elements.emailUp = $("#emailUp");
   page.dialogs.elements.phoneUp = $("#phoneUp");
@@ -161,59 +166,55 @@
 
   page.dialogs.alertDanger.modalUpdate = $("#modalUpdate .modal-body .modal-alert-danger");
   page.dialogs.alertDanger.modalCreate = $("#modalCreate .modal-body .modal-alert-danger");
-  page.dialogs.alertDanger.modalDeposit = $("#modalDeposit .modal-body .modal-alert-danger");
-  page.dialogs.alertDanger.modalWithdraw = $("#modalWithdraw .modal-body .modal-alert-danger");
-  page.dialogs.alertDanger.modalTransfer = $("#modalTransfer .modal-body .modal-alert-danger");
 
 
-  page.dialogs.elements.wrapper = $("#frmCreateCustomer section .wrappers");
+  page.dialogs.elements.wrapper = $("#frmCreateStaff section .wrappers");
   page.dialogs.elements.imageFile = $("#imageFile");
-  page.dialogs.elements.wrapperContent = $("#frmCreateCustomer section .wrappers .content");
-  page.dialogs.elements.imagePreview = $("#frmCreateCustomer section .image-preview canvas");
+  page.dialogs.elements.wrapperContent = $("#frmCreateStaff section .wrappers .content");
+  page.dialogs.elements.imagePreview = $("#frmCreateStaff section .image-preview canvas");
   page.dialogs.elements.canvas = $("#canvas");
   page.dialogs.elements.context = page.dialogs.elements.canvas[0].getContext('2d');
   page.dialogs.elements.imagePreview.css("display", "none");
-  page.dialogs.elements.divImagePreview = $("#frmCreateCustomer div.image-preview,#frmCreateCustomer div.file-name");
-  page.dialogs.elements.btnClearImagePreview = $("#frmCreateCustomer .clear-image-preview i");
+  page.dialogs.elements.divImagePreview = $("#frmCreateStaff div.image-preview,#frmCreateStaff div.file-name");
+  page.dialogs.elements.btnClearImagePreview = $("#frmCreateStaff .clear-image-preview i");
 
-  page.dialogs.elements.wrapperUp = $("#frmUpdateCustomer section .wrappers");
+  page.dialogs.elements.wrapperUp = $("#frmUpdateStaff section .wrappers");
   page.dialogs.elements.imageFileUp = $("#imageFileUp");
-  page.dialogs.elements.wrapperContentUp = $("#frmUpdateCustomer section .wrappers .content");
-  page.dialogs.elements.imagePreviewUp = $("#frmUpdateCustomer section .image-preview canvas");
+  page.dialogs.elements.wrapperContentUp = $("#frmUpdateStaff section .wrappers .content");
+  page.dialogs.elements.imagePreviewUp = $("#frmUpdateStaff section .image-preview canvas");
   page.dialogs.elements.canvasUp = $("#canvasUp");
   page.dialogs.elements.contextUp = page.dialogs.elements.canvasUp[0].getContext('2d');
   page.dialogs.elements.imagePreviewUp.css("display", "none");
-  page.dialogs.elements.divImagePreviewUp = $("#frmUpdateCustomer div.image-preview, #frmUpdateCustomer div.file-name");
-  page.dialogs.elements.btnClearImagePreviewUp = $("#frmUpdateCustomer .clear-image-preview i");
+  page.dialogs.elements.divImagePreviewUp = $("#frmUpdateStaff div.image-preview, #frmUpdateStaff div.file-name");
+  page.dialogs.elements.btnClearImagePreviewUp = $("#frmUpdateStaff .clear-image-preview i");
 
-  let customer = new Customer();
+  let staff = new Staff();
   let locationRegion = new LocationRegion();
 
-  page.commands.getAllCustomers = () => {
+  page.commands.getAllStaffs = () => {
     $.ajax({
       headers: {
         "accept": "application/json",
         "content-type": "application/json"
       },
       type: "GET",
-      url: page.urls.getAllCustomers
+      url: page.urls.getAllStaffs
     })
             .done((data) => {
 
               $.each(data, (i, item) => {
 
-                customer = item;
-                locationRegion = customer.locationRegion;
-                if (customer.avatarDTO.fileName === null) {
-                  customer.avatarDTO.fileName = "default_ie77t2.png";
-                  customer.avatarDTO.fileFolder = "avatar_images";
+                staff = item;
+                locationRegion = staff.locationRegion;
+                if (staff.avatarDTO.fileName === null) {
+                  staff.avatarDTO.fileName = "default_ie77t2.png";
+                  staff.avatarDTO.fileFolder = "avatar_images";
                 }
 
-                let avatar = customer.avatarDTO;
-                let str = renderCustomer(customer, locationRegion, avatar);
-                // let str = renderCustomer(customer, locationRegion);
+                let avatar = staff.avatarDTO;
+                let str = renderStaff(staff, locationRegion, avatar);
 
-                page.elements.tbCustomerBody.prepend(str);
+                page.elements.bodyContent.prepend(str);
               })
               page.commands.handleEventShow();
             })
@@ -291,62 +292,79 @@
               App.SweetAlert.showAlertError("Lỗi hệ thống, không tìm thấy thông tin phường, xã");
             })
   }
-  page.commands.getCustomerById = (customerId) => {
+  page.commands.getStaffById = (staffId) => {
     return $.ajax({
       type: "GET",
-      url: page.urls.getCustomerById + "/" + customerId
+      url: page.urls.getStaffById + "/" + staffId
     })
             .done((data) => {
-              // customer = data;
+
             })
             .fail((error) => {
               console.error(error);
             })
   }
 
-  function renderCustomer(customer, locationRegion, avatar) {
+  function renderStaff(staff, locationRegion, avatar) {
     return `
-                    <tr id="tr_${customer.id}">
-                        <td>${customer.id}</td>
-                        <td><img src="${App.SERVER_CLOUDINARY + App.SCALE_W150_H150_Q100 + "/" + avatar.fileFolder + "/" + avatar.fileName}" alt="avatar" ></td>
-                        <td>${customer.fullName}</td>
-                        <td>${customer.email}</td>
-                        <td>${customer.phone}</td>
 
-                        <td>${locationRegion.provinceName}</td>
-                        <td>${locationRegion.districtName}</td>
-                        <td>${locationRegion.wardName}</td>
-                        <td>${locationRegion.address}</td>
-                        <td>
-                            <button class="btn btn-outline-secondary update" data-id="${customer.id}" data-avatar-folder="${avatar.fileFolder}" data-avatar-file-name="${avatar.fileName}" title="Edit" data-toggle="tooltip">
+            <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column" id="div_${staff.id}">
+                      <div class="card bg-light d-flex flex-fill">
+                        <div class="card-header text-muted border-bottom-0">
+                          ID: ${staff.id}
+                        </div>
+                        <div class="card-body pt-0">
+                          <div class="row">
+                            <div class="col-7">
+                              <h2 class="lead"><b>${staff.fullName}</b></h2>
+                              <p class="text-muted text-sm"><b>About: </b> ${staff.email} </p>
+                              <ul class="ml-4 mb-0 fa-ul text-muted">
+                                <li class="small"><span class="fa-li">
+                                    <i class="fas fa-lg fa-building"></i>
+                                    </span> Address: ${locationRegion.address} - ${locationRegion.wardName},${locationRegion.districtName},${locationRegion.provinceName}</li>
+                                <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Phone #: ${staff.phone}</li>
+                              </ul>
+                            </div>
+                            <div class="col-5 text-center">
+                              <img src="${App.SERVER_CLOUDINARY + App.SCALE_W150_H150_Q100 + "/" + avatar.fileFolder + "/" + avatar.fileName}" alt="user-avatar" class="img-circle img-fluid">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="card-footer">
+                          <div class="text-right">
+                           <button class="btn btn-outline-secondary update" data-id="${staff.id}" data-avatar-folder="${avatar.fileFolder}" data-avatar-file-name="${avatar.fileName}" title="Chỉnh sửa" data-toggle="tooltip">
                                 <i class="fa-regular fa-pen-to-square " aria-hidden="true"></i>
                             </button>
-                        </td>
-                        <td>
-
-                            <button class="btn btn-outline-danger delete" data-id="${customer.id}" title="Suspend" data-toggle="tooltip">
+                            <button class="btn btn-outline-danger delete" data-id="${staff.id}" title="Xóa" data-toggle="tooltip">
                                 <i class="fa fa-ban" aria-hidden="true"></i>
                             </button>
-
-                        </td>
-                    </tr>
+                            <a href="#" class="btn btn-sm bg-teal">
+                              <i class="fas fa-comments"></i>
+                            </a>
+                            <a href="#" class="btn btn-sm btn-primary">
+                              <i class="fas fa-user"></i> View Profile
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                 `;
   }
 
-  page.commands.deleteCustomer = (obj) => {
+  page.commands.deleteStaff = (obj) => {
     $.ajax({
       headers: {
         "accept": "application/json",
         "content-type": "application/json"
       },
       type: "PATCH",
-      url: page.urls.deleteCustomer + "/" + obj.id,
+      url: page.urls.deleteStaff + "/" + obj.id,
       data: JSON.stringify(obj)
     })
             .done((data) => {
 
-              $("#tr_" + obj.id).empty()
-              App.SweetAlert.showAlertSuccess('Đã xóa! Khách hàng ' +data.fullName)
+              $("#div_" + obj.id).empty()
+              App.SweetAlert.showAlertSuccess('Đã xóa! nhân viên ' +data.fullName)
 
             })
             .fail((error) => {
@@ -361,10 +379,10 @@
 
 
   page.dialogs.elements.btnCreate.on("click", () => {
-    page.dialogs.elements.frmCreateCustomer.trigger("submit");
+    page.dialogs.elements.frmCreateStaff.trigger("submit");
   })
   page.dialogs.elements.btnUpdate.on("click", () => {
-    page.dialogs.elements.frmUpdateCustomer.trigger("submit");
+    page.dialogs.elements.frmUpdateStaff.trigger("submit");
   })
 
   page.dialogs.elements.provinceCre.on("change", function() {
@@ -409,14 +427,14 @@
 
       let avatarUrl = App.SERVER_CLOUDINARY + App.SCALE_W250_H250_Q100 + "/" + avatarFolder + "/" + avatarFileName;
 
-      page.commands.getCustomerById(id).then((data) => {
-        customer = data;
-        locationRegion = customer.locationRegion;
+      page.commands.getStaffById(id).then((data) => {
+        staff = data;
+        locationRegion = staff.locationRegion;
 
-        page.dialogs.elements.customerIdUp.val(id);
-        page.dialogs.elements.fullNameUp.val(customer.fullName);
-        page.dialogs.elements.emailUp.val(customer.email);
-        page.dialogs.elements.phoneUp.val(customer.phone);
+        page.dialogs.elements.staffIdUp.val(id);
+        page.dialogs.elements.fullNameUp.val(staff.fullName);
+        page.dialogs.elements.emailUp.val(staff.email);
+        page.dialogs.elements.phoneUp.val(staff.phone);
         page.dialogs.elements.addressUp.val(locationRegion.address);
 
         page.dialogs.commands.loadImageToCanvasUp(avatarUrl);
@@ -441,9 +459,9 @@
         page.dialogs.elements.modalUpdate.modal("show");
 
       })
-              .catch(() => {
-                App.SweetAlert.showAlertError(App.AlertMessageVi.ERROR_404);
-              });
+        .catch(() => {
+          App.SweetAlert.showAlertError(App.AlertMessageVi.ERROR_404);
+        });
     })
   }
   page.commands.removeEventShowUpdateModal = () => {
@@ -455,10 +473,10 @@
       this.blur();
       let id = $(this).data("id");
 
-      page.commands.getCustomerById(id).then((data) => {
+      page.commands.getStaffById(id).then((data) => {
         Swal.fire({
           title: 'Chắc chắn?',
-          text: "Xóa khách hàng: " + data.fullName,
+          text: "Xóa nhân viên: " + data.fullName,
           icon: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
@@ -467,19 +485,14 @@
           cancelButtonText: 'Hủy!'
         }).then((result) => {
           if (result.isConfirmed) {
-            // Swal.fire(
-            //     'Đã xóa!',
-            //     'Khách hàng ' +data.fullName + ' đã bị xóa.',
-            //     'success'
-            // )
             data.deleted = 1;
-            page.commands.deleteCustomer(data);
+            page.commands.deleteStaff(data);
           }
         })
       })
-              .catch(() => {
-                App.SweetAlert.showAlertError(App.AlertMessageVi.ERROR_404);
-              });
+        .catch(() => {
+          App.SweetAlert.showAlertError(App.AlertMessageVi.ERROR_404);
+        });
     })
   }
   page.commands.removeEventShowDeleteModal = () => {
@@ -500,14 +513,13 @@
 
   page.dialogs.commands.handleCloseCreateModal = () => {
     page.dialogs.alertDanger.modalCreate.removeClass("show").addClass("hide").empty();
-    page.dialogs.elements.frmCreateCustomer[0].reset();
-    page.dialogs.elements.frmCreateCustomer.validate().resetForm();
+    page.dialogs.elements.frmCreateStaff[0].reset();
+    page.dialogs.elements.frmCreateStaff.validate().resetForm();
   }
   page.dialogs.commands.handleCloseUpdateModal = () => {
-    // page.dialogs.elements.frmUpdateCustomer.find("input.error").removeClass("error");
     page.dialogs.alertDanger.modalUpdate.removeClass("show").addClass("hide").empty();
-    page.dialogs.elements.frmUpdateCustomer[0].reset();
-    page.dialogs.elements.frmUpdateCustomer.validate().resetForm();
+    page.dialogs.elements.frmUpdateStaff[0].reset();
+    page.dialogs.elements.frmUpdateStaff.validate().resetForm();
     page.dialogs.elements.clearImagePreviewUp();
   }
 
@@ -523,7 +535,7 @@
           "Please check your input."
   );
 
-  page.dialogs.elements.frmCreateCustomer.validate({
+  page.dialogs.elements.frmCreateStaff.validate({
     rules: {
       fullNameCre: {
         required: true,
@@ -562,15 +574,15 @@
         $("#modalCreate .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
       } else {
         $("#modalCreate .modal-body .modal-alert-danger").removeClass("show").addClass("hide").empty();
-        $("#frmCreateProduct input.error").removeClass("error");
+        $("#frmCreateStaff input.error").removeClass("error");
       }
       this.defaultShowErrors();
     },
     submitHandler: function () {
-      page.commands.createCustomerWithAvatar();
+      page.commands.createStaff();
     }
   })
-  page.dialogs.elements.frmUpdateCustomer.validate({
+  page.dialogs.elements.frmUpdateStaff.validate({
     rules: {
       fullNameUp: {
         required: true,
@@ -609,16 +621,16 @@
         $("#modalUpdate .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
       } else {
         $("#modalUpdate .modal-body .modal-alert-danger").removeClass("show").addClass("hide").empty();
-        $("#frmUpdateProduct input.error").removeClass("error");
+        $("#frmUpdateStaff input.error").removeClass("error");
       }
       this.defaultShowErrors();
     },
     submitHandler: function () {
-      page.commands.updateCustomerWithAvatar();
+      page.commands.updateStaff();
     }
   })
 
-  page.commands.createCustomerWithAvatar = () => {
+  page.commands.createStaff = () => {
     page.elements.loader.removeClass("hide");
     page.dialogs.elements.btnCreate.prop('disabled', true);
 
@@ -645,18 +657,18 @@
       contentType: false,
       cache: false,
       processData: false,
-      url: page.urls.createCustomer,
+      url: page.urls.createStaff,
       data: formData
     }).done((data) => {
-      customer = data;
-      locationRegion = customer.locationRegion;
-      if (customer.avatarDTO.fileName === null) {
-        customer.avatarDTO.fileName = "default_ie77t2.png";
-        customer.avatarDTO.fileFolder = "avatar_images";
+      staff = data;
+      locationRegion = staff.locationRegion;
+      if (staff.avatarDTO.fileName === null) {
+        staff.avatarDTO.fileName = "default_ie77t2.png";
+        staff.avatarDTO.fileFolder = "avatar_images";
       }
-      let avatar = customer.avatarDTO;
-      let str = renderCustomer(customer,locationRegion,avatar);
-      page.elements.tbCustomerBody.prepend(str);
+      let avatar = staff.avatarDTO;
+      let str = renderStaff(staff,locationRegion,avatar);
+      page.elements.bodyContent.prepend(str);
       page.dialogs.elements.modalCreate.modal("hide");
 
       page.commands.removeEventShow();
@@ -683,13 +695,13 @@
     });
   }
 
-  page.commands.updateCustomerWithAvatar = () => {
+  page.commands.updateStaff = () => {
 
     page.elements.loader.removeClass("hide");
     page.dialogs.elements.btnUpdate.prop('disabled', true);
 
     let formData = new FormData();
-    formData.append("id", page.dialogs.elements.customerIdUp.val().toString());
+    formData.append("id", page.dialogs.elements.staffIdUp.val().toString());
     formData.append("fullName", page.dialogs.elements.fullNameUp.val().toString());
     formData.append("email", page.dialogs.elements.emailUp.val().toString());
     formData.append("phone", page.dialogs.elements.phoneUp.val().toString());
@@ -714,20 +726,20 @@
       contentType: false,
       cache: false,
       processData: false,
-      url:page.urls.updateCustomer + "/" + customer.id,
+      url:page.urls.updateStaff + "/" + staff.id,
       data: formData
     })
       .done((data) => {
-        customer = data;
-        locationRegion = customer.locationRegion;
-        if (customer.avatarDTO.fileName === null) {
-          customer.avatarDTO.fileName = "default_ie77t2.png";
-          customer.avatarDTO.fileFolder = "avatar_images";
+        staff = data;
+        locationRegion = staff.locationRegion;
+        if (staff.avatarDTO.fileName === null) {
+          staff.avatarDTO.fileName = "default_ie77t2.png";
+          staff.avatarDTO.fileFolder = "avatar_images";
         }
-        let avatar = customer.avatarDTO;
-        let str = renderCustomer(customer,locationRegion,avatar);
+        let avatar = staff.avatarDTO;
+        let str = renderStaff(staff,locationRegion,avatar);
 
-        $("#tr_" + customer.id).replaceWith(str);
+        $("#div_" + staff.id).replaceWith(str);
 
         page.dialogs.elements.modalUpdate.modal("hide");
         page.commands.removeEventShow();
@@ -835,7 +847,7 @@
 
 
   page.commands.loadData = () => {
-    page.commands.getAllCustomers();
+    page.commands.getAllStaffs();
 
     page.commands.getAllProvinces("Cre").then(() => {
       let provinceId = page.dialogs.elements.provinceCre.val();

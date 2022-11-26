@@ -1,6 +1,6 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 
-<th:block th:fragment="modalEditCustomer">
+<th:block th:fragment="modalUpdateStaff">
     <div class="modal fade" id="modalUpdate" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
@@ -11,10 +11,10 @@
                 </div>
                 <div class="modal-body">
                     <div class="modal-alert-danger hide"></div>
-                    <form id="frmUpdateCustomer" method="post" class="row">
+                    <form id="frmUpdateStaff" method="post" class="row">
                         <div class="col-lg-9 fl">
                             <div class="row col-lg-12 mt-3">
-                                <input type="hidden" id="customerIdUp">
+                                <input type="hidden" id="staffIdUp">
                                 <div class="col-md-4">
                                     <label class="form-label">Họ và tên</label>
                                     <div class="input-group">

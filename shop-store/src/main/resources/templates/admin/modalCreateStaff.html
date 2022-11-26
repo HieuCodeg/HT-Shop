@@ -1,83 +1,82 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 
-<th:block th:fragment="modalEditCustomer">
-    <div class="modal fade" id="modalUpdate" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-xl">
+<th:block th:fragment="modalCreateStaff">
+    <div class="modal fade" id="modalCreate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header modal-header-update">
-                    <h1 class="modal-title fs-5"  >Chỉnh sửa thông tin</h1>
-                    <button type="button" class="btn-close btn-close-white btnClose" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Thêm nhân viên</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="modal-alert-danger hide"></div>
-                    <form id="frmUpdateCustomer" method="post" class="row">
+                    <form id="frmCreateStaff" method="post" class="row">
                         <div class="col-lg-9 fl">
                             <div class="row col-lg-12 mt-3">
-                                <input type="hidden" id="customerIdUp">
-                                <div class="col-md-4">
-                                    <label class="form-label">Họ và tên</label>
+                                <div class="col-lg-4">
+                                    <label>Họ và tên</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-user-pen"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" id="fullNameUp" name="fullNameUp">
+                                        <input type="text" id="fullNameCre" name="fullNameCre" class="form-control">
                                     </div>
-
                                 </div>
-                                <div class="col-md-4">
-                                    <label class="form-label">Email</label>
+                                <div class="col-lg-4">
+                                    <label>Email</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" id="emailUp" name="emailUp">
+                                        <input type="email" id="emailCre" name="emailCre" class="form-control">
                                     </div>
-
                                 </div>
-                                <div class="col-md-4">
-                                    <label class="form-label">Số điện thoại</label>
+                                <div class="col-lg-4">
+                                    <label>Số điện thoại</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                         </div>
-                                        <input type="tel" class="form-control" id="phoneUp" name="phoneUp">
+                                        <input type="tel" id="phoneCre" name="phoneCre" class="form-control">
                                     </div>
 
                                 </div>
                             </div>
                             <div class="row col-lg-12 mt-3">
-                                <div class="col-md-6">
-                                    <label class="form-label">Tỉnh</label>
-                                    <select class="form-select" id="provinceUp" name="provinceUp"></select>
+                                <div class="col-lg-6">
+                                    <label>Tỉnh</label>
+                                    <select name="provinceCre" id="provinceCre" class="form-control form-select">
+                                    </select>
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Huyện</label>
-                                    <select class="form-select" id="districtUp" name="districtUp"></select>
+                                <div class="col-lg-6">
+                                    <label>Huyện</label>
+                                    <select name="districtCre" id="districtCre" class="form-control form-select">
+                                    </select>
                                 </div>
                             </div>
                             <div class="row col-lg-12 mt-3">
-                                <div class="col-md-6">
-                                    <label class="form-label">Xã</label>
-                                    <select class="form-select" id="wardUp" name="wardUp"></select>
+                                <div class="col-lg-6">
+                                    <label>Xã</label>
+                                    <select name="wardCre" id="wardCre" class="form-control form-select">
+                                    </select>
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Địa chỉ</label>
+                                <div class="col-lg-6">
+                                    <label>Địa chỉ</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control valid" id="addressUp" name="addressUp">
+                                        <input type="text" id="addressCre" name="addressCre" class="form-control">
                                         <div class="input-group-append">
                                             <div class="input-group-text"><i class="fas fa-ambulance"></i></div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
+
                         </div>
                         <div class="col-lg-3 fl">
                             <section>
                                 <div class="wrappers">
                                     <div class="image-preview">
-                                        <canvas id="canvasUp" style="display: none;" width="4094" height="2048"></canvas>
+                                        <canvas id="canvas" style="display: none;" width="4094" height="2048"></canvas>
                                     </div>
                                     <div class="content" style="opacity: 1;">
                                         <div class="icon">
@@ -97,16 +96,16 @@
                                         Đổi ảnh
                                     </div>
                                 </div>
-                                <input type="file" id="imageFileUp" accept="image/jpeg, image/png" hidden="">
+                                <input type="file" id="imageFile" accept="image/jpeg, image/png" hidden="">
                             </section>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Hủy bỏ</button>
-                    <button type="button" id="btnUpdate" class="btn btn-outline-primary">
-                        <i class="fas fa-edit"></i>
-                        Lưu thay đổi
+                    <button type="button" id="btnCreate" class="btn btn-outline-primary">
+                        <i class="fas fa-plus"></i>
+                        Thêm mới
                     </button>
                 </div>
             </div>

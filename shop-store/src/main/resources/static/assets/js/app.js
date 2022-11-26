@@ -15,13 +15,11 @@ class App {
     static SCALE_W150_H150_Q100 = "/c_limit,w_150,h_150,q_100";
 
     static PRODUCTS_API = this.DOMAIN_SERVER + "/api/products";
+    static STAFF_API = this.DOMAIN_SERVER + "/api/staffs";
 
     static AlertMessageVi = class {
         static SUCCESS_CREATED = "Tạo dữ liệu thành công !";
         static SUCCESS_UPDATED = "Cập nhật dữ liệu thành công !";
-        static SUCCESS_DEPOSIT = "Giao dịch gửi tiền thành công !";
-        static SUCCESS_WITHDRAW = "Giao dịch rút tiền thành công !";
-        static SUCCESS_TRANSFER = "Giao dịch chuyển khoản thành công !";
         static SUCCESS_DEACTIVATE = "Hủy kích hoạt khách hàng thành công !";
 
         static ERROR_400 = "Thao tác không thành công, vui lòng kiểm tra lại dữ liệu.";
@@ -89,6 +87,18 @@ class Product {
 }
 
 class Customer {
+    constructor(id, fullName, email, phone, locationRegion, balance, deleted, avatarDTO) {
+        this.id = id;
+        this.fullName = fullName;
+        this.email = email;
+        this.phone = phone;
+        this.locationRegion = locationRegion;
+        this.balance = balance;
+        this.deleted = deleted;
+        this.avatarDTO = avatarDTO;
+    }
+}
+class Staff {
     constructor(id, fullName, email, phone, locationRegion, balance, deleted, avatarDTO) {
         this.id = id;
         this.fullName = fullName;
