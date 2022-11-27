@@ -23,17 +23,26 @@ public class Product extends BaseEntity {
     private Long id;
 
     private String title;
-
-    @OneToOne
-    @JoinColumn(name = "avatar_id", referencedColumnName = "id")
-    private ProductAvatar productAvatar;
-
     @Column(precision = 12, scale = 0, nullable = false)
     private BigDecimal price;
-
     private Long quantity;
 
     private String description;
+    @Column(precision = 12, scale = 0, nullable = true)
+    private BigDecimal oldPrice;
+
+    @Column( nullable = true)
+    private Long discount;
+
+    @Column( nullable = true)
+    private Boolean newCheck;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
+    private Category category;
+    @OneToOne
+    @JoinColumn(name = "avatar_id", referencedColumnName = "id")
+    private ProductAvatar productAvatar;
 
 
     public ProductDTO toProductDTO() {
@@ -43,7 +52,11 @@ public class Product extends BaseEntity {
                 .setPrice(price)
                 .setQuantity(quantity)
                 .setDescription(description)
-                .setAvatar(productAvatar.toProductAvatarDTO());
+                .setOldPrice(oldPrice)
+                .setDiscount(discount)
+                .setNewCheck(newCheck)
+                .setCategory(category)
+                .setAvatar(productAvatar);
     }
 
 

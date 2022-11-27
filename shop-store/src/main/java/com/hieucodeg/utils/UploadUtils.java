@@ -86,4 +86,12 @@ public class UploadUtils {
         );
     }
 
+    public Map buildImageDestroyParams(String publicId) {
+        return ObjectUtils.asMap(
+                "public_id", publicId,
+                "overwrite", true,
+                "resource_type", "image"
+        );
+    }
+
 }

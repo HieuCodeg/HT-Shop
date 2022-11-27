@@ -47,7 +47,7 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Danh sách các sản phẩm của cửa hàng bạn</h3>
-                <input id="btnShowCreateModal" type="submit" value="Create new Product" class="btn btn-outline-info float-right" title="Create" data-toggle="tooltip">
+                <input id="btnShowCreateModal" type="submit" value="Tạo sản phẩm" class="btn btn-outline-primary float-right" title="Thêm" data-toggle="tooltip">
               </div>
 
               <!-- /.card-header -->
@@ -58,10 +58,12 @@
                       <th>ID</th>
                       <th>Hình ảnh</th>
                       <th>Tên sản phẩm</th>
-                      <th>Giá</th>
+                      <th>Giá hiện tại</th>
+                      <th>Giá cũ</th>
                       <th>Số lượng</th>
+                      <th>Danh mục</th>
                       <th>Mô tả</th>
-                      <th colspan="2">Action</th>
+                      <th colspan="2">Thao tác</th>
                     </tr>
                   </thead>
                   <tbody></tbody>
@@ -105,6 +107,7 @@
       createProduct: App.PRODUCTS_API,
       updateProduct: App.PRODUCTS_API + "/update",
       deleteProduct:  App.PRODUCTS_API + "/delete",
+      getAllCategories: App.PRODUCTS_API + "/categories"
 
     },
     elements: {},
@@ -134,6 +137,9 @@
   page.dialogs.elements.priceCre = $("#priceCre");
   page.dialogs.elements.quantityCre = $("#quantityCre");
   page.dialogs.elements.descriptionCre = $("#descriptionCre");
+  page.dialogs.elements.categoryCre = $("#categoryCre");
+  page.dialogs.elements.discountCre = $("#discountCre");
+  page.dialogs.elements.newCheckCre = $("#newCheckCre");
   page.dialogs.elements.btnCreate = $("#btnCreate");
 
   page.dialogs.elements.modalUpdate = $("#modalUpdate");
@@ -141,6 +147,10 @@
   page.dialogs.elements.titleUp = $("#titleUp");
   page.dialogs.elements.priceUp = $("#priceUp");
   page.dialogs.elements.quantityUp  = $("#quantityUp");
+  page.dialogs.elements.categoryUp = $("#categoryUp");
+  page.dialogs.elements.discountUp = $("#discountUp");
+  page.dialogs.elements.newCheckUp = $("#newCheckUp");
+  page.dialogs.elements.oldPriceUp = $("#oldPriceUp");
   page.dialogs.elements.descriptionUp  = $("#descriptionUp");
   page.dialogs.elements.btnUpdate = $("#btnUpdate");
 
@@ -166,6 +176,7 @@
 
 
   let product = new Product();
+  let category = new Category();
 
   page.commands.getAllProducts = () => {
     $.ajax({
@@ -193,7 +204,50 @@
               console.error(error);
             })
   }
+  page.commands.getAllCategories = () => {
+    $.ajax({
+      headers: {
+        "accept": "application/json",
+        "content-type": "application/json"
+      },
+      type: "GET",
+      url: page.urls.getAllCategories
+    })
+      .done((data) => {
 
+        page.dialogs.elements.categoryCre.empty()
+
+        data.map(item => {
+          let str = `<option value="${item.id}">${item.name}</option>`;
+          page.dialogs.elements.categoryCre.append(str);
+        })
+      })
+      .fail((error) => {
+        console.error(error);
+      })
+  }
+  page.commands.getAllCategoriesUp = () => {
+    return $.ajax({
+      headers: {
+        "accept": "application/json",
+        "content-type": "application/json"
+      },
+      type: "GET",
+      url: page.urls.getAllCategories
+    })
+            .done((data) => {
+
+              page.dialogs.elements.categoryUp.empty();
+
+              data.map(item => {
+                let str = `<option value="${item.id}">${item.name}</option>`;
+                page.dialogs.elements.categoryUp.append(str);
+              })
+            })
+            .fail((error) => {
+              console.error(error);
+            })
+  }
   page.commands.getProductById = (productId) => {
     return $.ajax({
       type: "GET",
@@ -206,7 +260,6 @@
               console.error(error);
             })
   }
-
   function renderProduct(product, avatar) {
     return `
                     <tr id="tr_${product.id}">
@@ -214,16 +267,18 @@
                         <td><img src="${App.SERVER_CLOUDINARY + App.SCALE_W150_H150_Q100 + "/" + avatar.fileFolder + "/" + avatar.fileName}" alt="avatar" ></td>
                         <td>${product.title}</td>
                         <td>${new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(product.price)}</td>
+                        <td>${new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(product.oldPrice)}</td>
                         <td>${product.quantity}</td>
+                        <td>${product.category.name}</td>
                         <td>${product.description}</td>
                         <td>
-                            <button class="btn btn-outline-primary update" data-id="${product.id}" data-avatar-folder="${avatar.fileFolder}" data-avatar-file-name="${avatar.fileName}" title="Edit" data-toggle="tooltip">
+                            <button class="btn btn-outline-primary update" data-id="${product.id}" data-avatar-folder="${avatar.fileFolder}" data-avatar-file-name="${avatar.fileName}" title="Chỉnh sửa" data-toggle="tooltip">
                                 <i class="fa-regular fa-pen-to-square " aria-hidden="true"></i>
                             </button>
                         </td>
 
                         <td>
-                            <button id="btnDelete_${product.id}" class="btn btn-outline-danger delete" data-id="${product.id}" title="Suspend" data-toggle="tooltip">
+                            <button id="btnDelete_${product.id}" class="btn btn-outline-danger delete" data-id="${product.id}" title="Xóa" data-toggle="tooltip">
                                 <i class="fa fa-ban" aria-hidden="true"></i>
                             </button>
 
@@ -248,11 +303,20 @@
 
       page.commands.getProductById(id).then((data) => {
         product = data;
+        category = product.category;
 
         page.dialogs.elements.titleUp.val(product.title);
         page.dialogs.elements.priceUp.val(product.price);
         page.dialogs.elements.quantityUp.val(product.quantity);
         page.dialogs.elements.descriptionUp.val(product.description);
+        page.dialogs.elements.oldPriceUp.val(product.oldPriceUp);
+        page.dialogs.elements.discountUp.val(product.discountUp);
+
+        page.dialogs.elements.newCheckUp.val(product.newCheckUp);
+
+        page.commands.getAllCategoriesUp().then(() => {
+          page.dialogs.elements.categoryUp.val(category.id);
+        })
 
         page.dialogs.commands.loadImageToCanvasUp(avatarUrl);
 
@@ -395,10 +459,17 @@
     page.dialogs.elements.btnCreate.prop('disabled', true);
 
     let formData = new FormData();
+
     formData.append("title", page.dialogs.elements.titleCre.val().toString());
     formData.append("price", toNumber(page.dialogs.elements.priceCre.val()).toString());
     formData.append("quantity", toNumber(page.dialogs.elements.quantityCre.val()).toString());
     formData.append("description", page.dialogs.elements.descriptionCre.val().toString());
+    formData.append("discount", page.dialogs.elements.discountCre.val().toString());
+    formData.append("categoryId", page.dialogs.elements.categoryCre.val().toString());
+    if ($('#newCheckCre').is(":checked"))
+    {
+      formData.append("newCheck", true);
+    }
     formData.append("file", page.dialogs.elements.imageFile[0].files[0]);
 
     page.dialogs.alertDanger.modalCreate.removeClass("show").addClass("hide").empty();
@@ -631,6 +702,7 @@
 
   page.commands.loadData = () => {
     page.commands.getAllProducts();
+    page.commands.getAllCategories();
 
   }
 

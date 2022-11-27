@@ -22,13 +22,13 @@ public class UserDTO {
 
     private Long id;
 
-    @NotBlank(message = "The email is required")
-    @Email(message = "The email address is invalid")
-    @Size(max = 50, message = "The length of email must be between 5 and 50 characters")
+    @NotBlank(message = "Vui lòng nhập tên đăng nhập")
+    @Email(message = "Tên đăng nhập phải là email đăng ký của tài khoản")
+    @Size(min = 6, max = 50, message = "Độ dài tên đăng nhập nằm trong khoảng 6-50 ký tự")
     private String username;
 
-    @NotBlank(message = "The password is required")
-    @Size(max = 30, message = "Maximum password length 30 characters")
+    @NotBlank(message = "Vui lòng nhập mật khẩu")
+    @Size( max = 50, message = "Độ dài mật khẩu nằm trong khoảng 6-50 ký tự")
     private String password;
 
     @Valid

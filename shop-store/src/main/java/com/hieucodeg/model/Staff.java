@@ -27,8 +27,12 @@ public class Staff extends BaseEntity{
 
     @Column(nullable = false, unique = true)
     private String email;
-
+    @Column(nullable = false)
     private String phone;
+
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = true, unique = true)
+    private User user;
 
     @OneToOne
     @JoinColumn(name = "location_region_id", referencedColumnName = "id", nullable = false)

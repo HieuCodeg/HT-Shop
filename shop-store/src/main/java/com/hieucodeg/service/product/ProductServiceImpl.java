@@ -1,12 +1,15 @@
 package com.hieucodeg.service.product;
 
 import com.hieucodeg.exception.DataInputException;
+import com.hieucodeg.model.Category;
 import com.hieucodeg.model.Product;
 import com.hieucodeg.model.ProductAvatar;
 import com.hieucodeg.model.dto.ProductCreateDTO;
+import com.hieucodeg.model.dto.ProductDTO;
 import com.hieucodeg.model.enums.FileType;
 import com.hieucodeg.repository.ProductAvatarRepository;
 import com.hieucodeg.repository.ProductRepository;
+import com.hieucodeg.service.category.ICategoryService;
 import com.hieucodeg.service.upload.UploadService;
 import com.hieucodeg.utils.UploadUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -32,12 +36,20 @@ public class ProductServiceImpl implements IProductService {
     private UploadService uploadService;
 
     @Autowired
+    private ICategoryService categoryService;
+
+    @Autowired
     private UploadUtils uploadUtils;
 
 
     @Override
     public List<Product> findAll() {
         return productRepository.findAll();
+    }
+
+    @Override
+    public List<ProductDTO> getAllProductDTO() {
+        return productRepository.getAllProductDTO();
     }
 
     @Override
@@ -56,14 +68,34 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public Product create(ProductCreateDTO productCreateDTO) {
+    public Product create(ProductCreateDTO productCreateDTO) throws IOException {
 
         ProductAvatar productAvatar = new ProductAvatar();
         productAvatar = productAvatarRepository.save(productAvatar);
 
         ProductAvatar newProductAvatar = uploadAndSaveProductAvatar(productCreateDTO, productAvatar);
 
-        Product product = productRepository.save(productCreateDTO.toProduct(newProductAvatar));
+        Category category = categoryService.findById(Long.valueOf(productCreateDTO.getCategoryId())).get();
+        Product newProduct = productCreateDTO.toProduct(newProductAvatar);
+        newProduct.setCategory(category);
+        if (productCreateDTO.getDiscount() != null) {
+            newProduct.setDiscount(Long.valueOf(productCreateDTO.getDiscount()));
+        }
+        if (productCreateDTO.getNewCheck() != null) {
+            newProduct.setNewCheck(productCreateDTO.getNewCheck());
+        }
+        if (productCreateDTO.getOldPrice() != null) {
+            newProduct.setOldPrice(BigDecimal.valueOf(Long.parseLong(productCreateDTO.getOldPrice())));
+        }
+
+
+        Product product = new Product();
+        try {
+
+            product = productRepository.save(newProduct);
+        } catch (Exception e) {
+            deleteProductAvatar(productAvatar.getCloudId());
+        }
 
         return product;
     }
@@ -105,6 +137,10 @@ public class ProductServiceImpl implements IProductService {
             e.printStackTrace();
             throw new DataInputException("Upload hình ảnh thất bại");
         }
+    }
+
+    private void deleteProductAvatar(String cloudId) throws IOException {
+        uploadService.destroyImage(cloudId, uploadUtils.buildImageDestroyParams(cloudId));
     }
 
     private ProductAvatar deleteAndUploadProductAvatar(ProductCreateDTO productCreateDTO,Product product, String cloudId, ProductAvatar productAvatar) {

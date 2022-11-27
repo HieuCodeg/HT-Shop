@@ -2,13 +2,15 @@ package com.hieucodeg.controller.api;
 
 import com.hieucodeg.exception.DataInputException;
 import com.hieucodeg.exception.EmailExistsException;
-import com.hieucodeg.model.Customer;
-import com.hieucodeg.model.LocationRegion;
+import com.hieucodeg.model.*;
 import com.hieucodeg.model.dto.*;
 import com.hieucodeg.repository.AvatarRepository;
 import com.hieucodeg.service.customer.ICustomerService;
+import com.hieucodeg.service.staff.IStaffService;
+import com.hieucodeg.service.user.IUserService;
 import com.hieucodeg.utils.AppUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -24,6 +26,12 @@ public class CustomerAPI {
 
     @Autowired
     private ICustomerService customerService;
+
+    @Autowired
+    private IStaffService staffService;
+
+    @Autowired
+    private IUserService userService;
     @Autowired
     private AppUtils appUtils;
 
@@ -64,8 +72,11 @@ public class CustomerAPI {
         }
 
         Customer customer = customerOptional.get();
+        Long idUser = customer.getUser().getId();
+        customer.setUser(null);
         customer.setDeleted(true);
         customerService.save(customer);
+        userService.remove(idUser);
 
         return new ResponseEntity<>(customerOptional.get().toCustomerAvartasDTO(), HttpStatus.OK);
     }
@@ -76,6 +87,21 @@ public class CustomerAPI {
         new CustomerAvatarCreateDTO().validate(customerAvatarCreateDTO, bindingResult);
         if (bindingResult.hasErrors()) {
             return appUtils.mapErrorToResponse(bindingResult);
+        }
+
+        Optional<Staff> emailOptional1 = staffService.findByEmail(customerAvatarCreateDTO.getEmail());
+        if (emailOptional1.isPresent()) {
+            throw new EmailExistsException("Email đã tồn tại!");
+        }
+        Optional<Customer> emailOptional2 = customerService.findByEmail(customerAvatarCreateDTO.getEmail());
+
+        if (emailOptional2.isPresent()) {
+            throw new EmailExistsException("Email đã tồn tại!");
+        }
+
+        Boolean existsByUsername = userService.existsByUsername(customerAvatarCreateDTO.getEmail());
+        if (existsByUsername) {
+            throw new EmailExistsException("Email đã tồn tại!");
         }
 
         LocationRegion locationRegion = new LocationRegion();
@@ -90,6 +116,20 @@ public class CustomerAPI {
 
         customerAvatarCreateDTO.setId(0L);
         Customer customer = customerAvatarCreateDTO.toCustomer(locationRegion);
+
+        User user = new User();
+        user.setUsername(customerAvatarCreateDTO.getEmail());
+        user.setPassword("123456");
+        Role role= new Role();
+        role.setId(3l);
+        user.setRole(role);
+        try {
+            User newUser = userService.save(user);
+            customer.setUser(newUser);
+        } catch (DataIntegrityViolationException e) {
+            throw new DataInputException("Thông tin tài khoản không đúng, vui lòng kiểm tra lại");
+        }
+
         CustomerAvartasDTO newCustomer;
         if (customerAvatarCreateDTO.getFile() != null) {
             newCustomer = customerService.saveWithAvatar(customer, customerAvatarCreateDTO.getFile());
@@ -118,13 +158,32 @@ public class CustomerAPI {
         Customer customer = customerOptional.get();
         Long idLocation = customer.getLocationRegion().getId();
 
-        Optional<Customer> emailOptional = customerService.findByEmailAndIdIsNot(customerAvatarUpdateDTO.getEmail(), customerId);
+        customer.setFullName(customerAvatarUpdateDTO.getFullName());
 
-        if (emailOptional.isPresent()) {
-            throw new EmailExistsException("Email đã tồn tại!");
+        if (!customer.getEmail().equals(customerAvatarUpdateDTO.getEmail())) {
+            Optional<Customer> emailOptional = customerService.findByEmailAndIdIsNot(customerAvatarUpdateDTO.getEmail(), customerId);
+            if (emailOptional.isPresent()) {
+                throw new EmailExistsException("Email đã tồn tại!");
+            }
+            Optional<Staff> emailOptional1 = staffService.findByEmailAndIdIsNot(customerAvatarUpdateDTO.getEmail(), customerId);
+            if (emailOptional1.isPresent()) {
+                throw new EmailExistsException("Email đã tồn tại!");
+            }
+            Boolean existsByUsername = userService.existsByUsername(customerAvatarUpdateDTO.getEmail());
+            if (existsByUsername) {
+                throw new EmailExistsException("Email đã tồn tại!");
+            }
+
+            User user = customer.getUser();
+            user.setUsername(customerAvatarUpdateDTO.getEmail());
+            try {
+                User newUser = userService.save(user);
+                customer.setUser(newUser);
+            } catch (DataIntegrityViolationException e) {
+                throw new DataInputException("Thông tin tài khoản không đúng, vui lòng kiểm tra lại");
+            }
         }
 
-        customer.setFullName(customerAvatarUpdateDTO.getFullName());
         customer.setEmail(customerAvatarUpdateDTO.getEmail());
         customer.setPhone(customerAvatarUpdateDTO.getPhone());
 

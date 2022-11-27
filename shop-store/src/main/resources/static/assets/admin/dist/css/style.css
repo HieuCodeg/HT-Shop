@@ -111,12 +111,12 @@ tbody>tr>td:nth-child(7) a:hover{
     background-color: #08b676;
     color: #fff;
 }
-.modal-header-withdraw {
+.modal-header-green {
     background-color: #8bb608;
     color: #fff;
 }
-.modal-header-transfer {
-    background-color: #6808b6;
+.modal-header-violet {
+    background-color: #7a10d0;
     color: #fff;
 }
 .btnClose {
@@ -144,6 +144,9 @@ label.error {
 }
 .hiden {
     display: none;
+}
+.show {
+    display: block !important;
 }
 
 /*Start Loader*/

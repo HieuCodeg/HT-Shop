@@ -17,7 +17,7 @@ import java.util.Date;
 @Setter
 @Entity
 @Table(name = "product_avatar")
-public class ProductAvatar {
+public class ProductAvatar extends BaseEntity{
 
     @Id
     @GeneratedValue(generator = "uuid")

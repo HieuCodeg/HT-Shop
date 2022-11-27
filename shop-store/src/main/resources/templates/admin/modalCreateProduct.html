@@ -13,11 +13,16 @@
                     <form id="frmCreateProduct" method="post" class="row">
                         <div class="col-lg-9 fl">
                             <div class="row col-lg-12 mt-3">
-                                <div class="col-lg-12">
+                                <div class="col-lg-8">
                                     <label>Tên sản phẩm</label>
                                     <input type="text" id="titleCre" name="titleCre" class="form-control">
                                 </div>
-                                <div class="col-lg-6 ">
+                                <div class="col-lg-4">
+                                    <label class="form-label">Thể loại</label>
+                                    <select id="categoryCre" name="categoryCre" class="form-control form-select">
+                                    </select>
+                                </div>
+                                <div class="col-lg-5 ">
                                     <label>Giá sản phẩm (VNĐ)</label>
                                     <div class="input-group">
                                         <input type="text" id="priceCre" name="priceCre" class="form-control number-separator">
@@ -26,13 +31,24 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-5">
                                     <label>Số lượng</label>
                                     <input type="text" id="quantityCre" name="quantityCre" class="form-control number-separator">
+                                </div>
+                                <div class="col-lg-2">
+                                    <label>Giảm giá (%)</label>
+                                    <input type="number" id="discountCre" name="discountCre" class="form-control">
                                 </div>
                                 <div class="col-lg-12">
                                     <label>Mô tả</label>
                                     <input type="text" id="descriptionCre" name="descriptionCre" class="form-control">
+                                </div>
+                                <div class="row col-lg-12 mt-3">
+                                    <div class="icheck-success">
+                                        <input type="checkbox" id="newCheckCre" name="newCheckCre">
+                                        <label for="newCheckCre"> Nhãn sản phẩm mới
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
 

@@ -1,6 +1,5 @@
 package com.hieucodeg.model.dto;
 
-import com.hieucodeg.model.Customer;
 import com.hieucodeg.model.LocationRegion;
 import com.hieucodeg.model.Staff;
 import lombok.AllArgsConstructor;
@@ -32,6 +31,7 @@ public class StaffCreateDTO implements Validator {
     private String phone;
 
     MultipartFile file;
+    private boolean account;
 
     private Long locationId;
     @Pattern(regexp = "^\\d+$", message = "ID tỉnh phải là số")

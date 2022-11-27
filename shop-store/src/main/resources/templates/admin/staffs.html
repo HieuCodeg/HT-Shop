@@ -48,7 +48,7 @@
               <div class="card-header">
                 <h3 class="card-title">Danh sách nhân viên</h3>
                 <input id="btnShowCreateModal" type="submit" value="Thêm mới nhân viên"
-                       class="btn btn-outline-info float-right" title="Create" data-toggle="tooltip">
+                       class="btn btn-outline-primary float-right" title="Thêm mới" data-toggle="tooltip">
               </div>
 
               <!-- /.card-header -->
@@ -640,6 +640,10 @@
     formData.append("phone", page.dialogs.elements.phoneCre.val().toString());
     if (page.dialogs.elements.imageFile[0].files[0] != undefined) {
       formData.append("file", page.dialogs.elements.imageFile[0].files[0]);
+    }
+    if ($('#account').is(":checked"))
+    {
+      formData.append("account", true);
     }
 
     formData.append("provinceId", page.dialogs.elements.provinceCre.val().toString());

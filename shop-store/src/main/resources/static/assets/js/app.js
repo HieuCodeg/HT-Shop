@@ -14,7 +14,8 @@ class App {
     static SCALE_W250_H250_Q100 = "/c_limit,w_250,h_250,q_100";
     static SCALE_W150_H150_Q100 = "/c_limit,w_150,h_150,q_100";
 
-    static PRODUCTS_API = this.DOMAIN_SERVER + "/api/products";
+    static PRODUCTS_API = this.DOMAIN_SERVER + "/admin/api/products";
+    static PRODUCTSWEB_API = this.DOMAIN_SERVER + "/web/api/products";
     static STAFF_API = this.DOMAIN_SERVER + "/api/staffs";
 
     static AlertMessageVi = class {
@@ -76,12 +77,16 @@ class ProductAvatarDTO {
 }
 
 class Product {
-    constructor(id, title, price,quantity, description, avatar) {
+    constructor(id, title, price,quantity, description,oldPrice,discount,newCheck,category, avatar) {
         this.id = id;
         this.title = title;
         this.price = price;
         this.quantity = quantity;
         this.description = description;
+        this.oldPrice = oldPrice;
+        this.discount = discount;
+        this.newCheck = newCheck;
+        this.category = category;
         this.avatar = avatar;
     }
 }
@@ -99,7 +104,7 @@ class Customer {
     }
 }
 class Staff {
-    constructor(id, fullName, email, phone, locationRegion, balance, deleted, avatarDTO) {
+    constructor(id, fullName, email, phone, locationRegion, balance, deleted, avatarDTO, account) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
@@ -108,6 +113,7 @@ class Staff {
         this.balance = balance;
         this.deleted = deleted;
         this.avatarDTO = avatarDTO;
+        this.account = account;
     }
 }
 class Avatar {
@@ -143,6 +149,12 @@ class Role {
     constructor(id,code) {
         this.id = id;
         this.code = code;
+    }
+}
+class Category {
+    constructor(id,name) {
+        this.id = id;
+        this.name = name;
     }
 }
 
