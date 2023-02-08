@@ -1,11 +1,15 @@
 package com.hieucodeg.controller.api;
 
 import com.hieucodeg.exception.DataInputException;
+import com.hieucodeg.model.Category;
 import com.hieucodeg.model.Product;
+import com.hieucodeg.model.dto.CategoryDTO;
 import com.hieucodeg.model.dto.ProductDTO;
+import com.hieucodeg.service.category.ICategoryService;
 import com.hieucodeg.service.product.IProductService;
 import com.hieucodeg.utils.AppUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,20 +31,39 @@ public class ProductsWebAPI {
     @Autowired
     private AppUtils appUtils;
 
+    @Autowired
+    private ICategoryService categoryService;
+
 
     @GetMapping
     public ResponseEntity<?> getAll() {
 
-        List<Product> products = productService.findAllByDeletedIsFalse();
-
-        List<ProductDTO> productDTOS = new ArrayList<>();
-
-        for (Product item : products) {
-            ProductDTO productDTO = item.toProductDTO();
-            productDTOS.add(productDTO);
-        }
+        List<ProductDTO> productDTOS = productService.getAllProductDTO();
 
         return new ResponseEntity<>(productDTOS, HttpStatus.OK);
+    }
+
+    @GetMapping("/top5")
+    public ResponseEntity<?> getTop5() {
+
+        List<ProductDTO> productDTOS = productService.getNewProductDTO(PageRequest.of(0,5));
+
+        return new ResponseEntity<>(productDTOS, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/categories")
+    public ResponseEntity<?> getAllCategories() {
+
+        List<Category> categories = categoryService.findAll();
+
+        List<CategoryDTO> categoryDTOS = new ArrayList<>();
+        for (Category item : categories) {
+            CategoryDTO categoryDTO = item.toCategoryDTO();
+            categoryDTOS.add(categoryDTO);
+        }
+
+        return new ResponseEntity<>(categoryDTOS, HttpStatus.OK);
     }
 
     @GetMapping("/{productId}")

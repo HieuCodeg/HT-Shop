@@ -52,7 +52,7 @@
 
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="tbProduct" class="table table-bordered table-hover dataTable-table">
+                <table id="tbProduct" class="table table-bordered table-hover">
                   <thead>
                     <tr>
                       <th>ID</th>
@@ -60,10 +60,12 @@
                       <th>Tên sản phẩm</th>
                       <th>Giá hiện tại</th>
                       <th>Giá cũ</th>
+                      <th>Giảm giá (%)</th>
                       <th>Số lượng</th>
                       <th>Danh mục</th>
                       <th>Mô tả</th>
-                      <th colspan="2">Thao tác</th>
+                      <th >Sửa</th>
+                      <th >Xoá</th>
                     </tr>
                   </thead>
                   <tbody></tbody>
@@ -268,6 +270,7 @@
                         <td>${product.title}</td>
                         <td>${new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(product.price)}</td>
                         <td>${new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(product.oldPrice)}</td>
+                        <td>${product.discount}</td>
                         <td>${product.quantity}</td>
                         <td>${product.category.name}</td>
                         <td>${product.description}</td>
@@ -309,10 +312,10 @@
         page.dialogs.elements.priceUp.val(product.price);
         page.dialogs.elements.quantityUp.val(product.quantity);
         page.dialogs.elements.descriptionUp.val(product.description);
-        page.dialogs.elements.oldPriceUp.val(product.oldPriceUp);
-        page.dialogs.elements.discountUp.val(product.discountUp);
+        page.dialogs.elements.oldPriceUp.val(product.oldPrice);
+        page.dialogs.elements.discountUp.val(product.discount);
 
-        page.dialogs.elements.newCheckUp.val(product.newCheckUp);
+        page.dialogs.elements.newCheckUp.val(product.newCheck);
 
         page.commands.getAllCategoriesUp().then(() => {
           page.dialogs.elements.categoryUp.val(category.id);
@@ -520,6 +523,15 @@
     formData.append("price", toNumber(page.dialogs.elements.priceUp.val()).toString());
     formData.append("quantity", toNumber(page.dialogs.elements.quantityUp.val()).toString());
     formData.append("description", page.dialogs.elements.descriptionUp.val().toString());
+
+    formData.append("discount", page.dialogs.elements.discountUp.val().toString());
+    formData.append("categoryId", page.dialogs.elements.categoryUp.val().toString());
+    formData.append("oldPrice", toNumber(page.dialogs.elements.oldPriceUp.val()).toString());
+    if ($('#newCheckUp').is(":checked"))
+    {
+      formData.append("newCheck", true);
+    }
+
     if (page.dialogs.elements.imageFileUp[0].files[0] != undefined) {
       formData.append("file", page.dialogs.elements.imageFileUp[0].files[0]);
     }
@@ -575,18 +587,21 @@
       data: JSON.stringify(obj)
     }).done((data) => {
 
-      $("#tr_" + obj.id).empty()
-      App.SweetAlert.showAlertSuccess('Đã xóa! Sản phẩm ' +data.title)
+      $("#tr_" + obj.id).empty();
+
+      $('#tbProduct').DataTable().ajax.reload(data)
+      App.SweetAlert.showAlertSuccess('Đã xóa! Sản phẩm ' +data.title);
+
 
     })
-            .fail((error) => {
-              if (error.status == 403) {
-                App.SweetAlert.showAlertError("Xin lỗi, bạn không có quyền này!");
-              } else {
-                App.SweetAlert.showAlertError(App.AlertMessageVi.ERROR_500);
-              }
+      .fail((error) => {
+        if (error.status == 403) {
+          App.SweetAlert.showAlertError("Xin lỗi, bạn không có quyền này!");
+        } else {
+          App.SweetAlert.showAlertError(App.AlertMessageVi.ERROR_500);
+        }
 
-            })
+      })
   }
 
   page.dialogs.commands.loadImageToCanvas = (imageFile) => {
@@ -699,6 +714,28 @@
     page.dialogs.elements.clearImagePreviewUp();
   }
 
+  page.commands.addAnimation = () => {
+    $(function () {
+      $("#tbProduct").DataTable({
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
+        "iDisplayLength":3,
+        "language": {
+          "paginate": {
+            "previous": "Trước",
+            "next":"Sau",
+            "last": "Cuối",
+            "first": "Đầu",
+          },
+          "search": "Tìm kiếm",
+          "info": "Hiện _START_ đến _END_ trong _TOTAL_ kết quả"
+        },
+        "pagingType": "full_numbers"
+
+      });
+    });
+  }
 
   page.commands.loadData = () => {
     page.commands.getAllProducts();
@@ -742,6 +779,26 @@
     page.initializeEventControl();
   });
 
+  function onLoad(loading, loaded) {
+    if(document.readyState === 'complete'){
+      return loaded();
+    }
+    loading();
+    if (window.addEventListener) {
+      window.addEventListener('load', loaded, false);
+    }
+    else if (window.attachEvent) {
+      window.attachEvent('onload', loaded);
+    }
+  };
+  setTimeout(function () {
+    onLoad(function(){
+              console.log('I am waiting for the page to be loaded');
+            },
+            function(){
+              page.commands.addAnimation();
+            });
+  }, 1000);
 
 
 </script>

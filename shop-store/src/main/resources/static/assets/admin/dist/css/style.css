@@ -27,6 +27,7 @@ table th {
     color: #fff;
     border: 1px solid #ddd;
     text-align: center;
+    cursor: pointer;
 }
 table thead th {
     border: 0 solid #ddd;

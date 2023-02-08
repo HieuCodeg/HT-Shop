@@ -1,0 +1,378 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Shop Hieu Codeg</title>
+  <link rel="stylesheet" href="/assets/css/login.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" /></head>
+<body>
+<div id="container" class="container">
+  <!-- FORM SECTION -->
+  <div class="row">
+    <!-- SIGN UP -->
+    <div class="col align-items-center flex-col sign-up" id="modalSignUp">
+      <div class="form-wrapper align-items-center">
+        <form id="formSignUp" method="post">
+          <div class="form sign-up">
+            <div class="modal-alert-danger hide"></div>
+            <div class="input-group">
+              <i class="fa-solid fa-envelope"></i>
+              <input type="email" placeholder="Email (Username)" id="userNameUp" name="usernameUp">
+            </div>
+            <div class="input-group">
+              <i class="fa-solid fa-lock"></i>
+              <input type="password" placeholder="Password" id="passwordUp" name="passwordUp">
+            </div>
+            <select id="roleUp" name="roleUp" ></select>
+
+            <div class="btn btnNumber" id="btnNumber2">
+              <button type="button" id="btnSignUp">Sign up</button>
+            </div>
+            <p>
+                        <span class="formalColor">
+                            Already have an account?
+                        </span>
+              <b id="btnNextSignIn" class="pointer" >
+                Sign in here
+              </b>
+            </p>
+          </div>
+        </form>
+      </div>
+
+    </div>
+    <!-- END SIGN UP -->
+    <!-- Log IN -->
+    <div class="col align-items-center flex-col sign-in" id="modalSignIn">
+      <div class="form-wrapper align-items-center">
+        <form id="formSignIn" method="post">
+          <div class="form sign-in">
+            <div class="modal-alert-danger hide"></div>
+            <div class="input-group">
+              <i class="fa-solid fa-envelope"></i>
+              <input type="email" placeholder="Username (Email)" id="usernameIn" name="usernameIn">
+            </div>
+            <div class="input-group">
+              <i class="fa-solid fa-lock"></i>
+              <input type="password" placeholder="Password" id="passwordIn" name="passwordIn">
+            </div>
+
+            <div class="btn btnNumber" id="btnNumber1">
+              <button type="button" id="btnSignIn" >Sign in</button>
+            </div>
+            <p class="formalColor">
+              <b>
+                Forgot password?
+              </b>
+            </p>
+            <p>
+							<span class="formalColor">
+								Don't have an account?
+							</span>
+              <b id="btnNextSignUp" class="pointer">
+                Sign up here
+              </b>
+            </p>
+          </div>
+        </form>
+      </div>
+      <div class="form-wrapper">
+
+      </div>
+    </div>
+    <!-- END SIGN IN -->
+  </div>
+  <!-- END FORM SECTION -->
+  <!-- CONTENT SECTION -->
+  <div class="row content-row">
+    <!-- SIGN IN CONTENT -->
+    <div class="col align-items-center flex-col">
+      <div class="text sign-in">
+        <h2>
+          Welcome
+        </h2>
+
+      </div>
+      <div class="img sign-in">
+
+      </div>
+    </div>
+    <!-- END SIGN IN CONTENT -->
+    <!-- SIGN UP CONTENT -->
+    <div class="col align-items-center flex-col">
+      <div class="img sign-up">
+
+      </div>
+      <div class="text sign-up">
+        <h2>
+          Join with us
+        </h2>
+
+      </div>
+    </div>
+    <!-- END SIGN UP CONTENT -->
+  </div>
+  <!-- END CONTENT SECTION -->
+</div>
+<script src="/assets/sweetalert2/sweetalert2@11.js"></script>
+<script type="text/javascript" src="/assets/jquery/jquery-3.6.1.min.js"></script>
+<script src="/assets/jquery/jquery.validate-1.19.5.min.js"></script>
+<script type="text/javascript" src="/assets/js/login.js"></script>
+<script src="/assets/js/app.js"></script>
+<script>
+
+  const page = {
+    urls: {
+      getAllRoles: App.ROLE_API,
+      signUp: App.SIGNUP_API,
+      signIn: App.SIGNIN_API
+    },
+    elements: {},
+    loadData: {},
+    commands: {},
+    alertDanger: {},
+    dialogs: {
+      elements: {},
+      loadData: {},
+      commands: {},
+      alertDanger: {}
+    },
+    initializeEventControl: {}
+  }
+
+  page.elements.formSignUp = $("#formSignUp")
+  page.elements.usernameUp = $("#userNameUp")
+  page.elements.passwordUp = $("#passwordUp")
+  page.elements.roleUp = $("#roleUp")
+  page.elements.btnSignUp = $("#btnSignUp")
+  page.elements.btnNextSignIn = $("#btnNextSignIn")
+  page.alertDanger.formSignUp = $("#modalSignUp .modal-alert-danger");
+
+
+  page.elements.formSignIn = $("#formSignIn")
+  page.elements.usernameIn = $("#usernameIn")
+  page.elements.passwordIn = $("#passwordIn")
+  page.elements.btnSignIn = $("#btnSignIn")
+  page.elements.btnNextSignUp = $("#btnNextSignUp")
+  page.alertDanger.formSignIn = $("#modalSignIn .modal-alert-danger");
+
+  let user = new User();
+  let role = new Role();
+
+  page.commands.getAllRoles = () => {
+    $.ajax({
+      headers: {
+        "accept": "application/json",
+        "content-type": "application/json"
+      },
+      type: "GET",
+      url: page.urls.getAllRoles
+    })
+            .done((data) => {
+              page.elements.roleUp.empty()
+
+              data.map(item => {
+                let str = `<option value="${item.id}">${item.code}</option>`;
+                page.elements.roleUp.append(str);
+              })
+            })
+            .fail((error) => {
+              App.SweetAlert.showAlertError("Lỗi hệ thống, không tìm thấy quyền truy cập");
+            })
+  }
+
+  page.elements.btnSignUp.on("click", () => {
+    page.elements.formSignUp.trigger("submit");
+  })
+  page.elements.btnSignIn.on("click", () => {
+    page.elements.formSignIn.trigger("submit");
+  })
+  page.elements.btnNextSignUp.on("click", () => {
+    page.commands.resetFormSignUp();
+    toggle();
+  })
+  page.elements.btnNextSignIn.on("click", () => {
+    page.commands.resetFormSignIn();
+    toggle();
+  })
+
+  page.commands.resetFormSignIn = () => {
+    page.elements.formSignIn[0].reset();
+    page.elements.formSignIn.validate().resetForm();
+    page.alertDanger.formSignIn.removeClass("show").addClass("hide").empty();
+  }
+  page.commands.resetFormSignUp = () => {
+    page.elements.formSignUp[0].reset();
+    page.elements.formSignUp.validate().resetForm();
+    page.alertDanger.formSignUp.removeClass("show").addClass("hide").empty();
+  }
+
+  page.commands.SignUp = () => {
+    user.username = page.elements.usernameUp.val();
+    user.password = page.elements.passwordUp.val();
+    role.id = +page.elements.roleUp.val();
+    user.role = role;
+
+    page.alertDanger.formSignUp.removeClass("show").addClass("hide").empty();
+    $.ajax({
+      headers: {
+        "accept": "application/json",
+        "content-type": "application/json"
+      },
+      type: "POST",
+      url: page.urls.signUp,
+      data: JSON.stringify(user)
+    })
+            .done((data) => {
+
+              App.SweetAlert.showAlertSuccess("Đăng ký thành công!");
+
+              setTimeout(function () {
+                // window.location.href = "/";
+                page.commands.resetFormSignIn();
+                toggle()
+              }, 1000);
+            })
+            .fail((jqXHR) => {
+              page.alertDanger.formSignUp.removeClass("hide").addClass("show").empty();
+              let errors = jqXHR.responseJSON;
+              if (errors) {
+                let str = "";
+                $.each(errors, (k, v) => {
+                  str += `
+                            <li><label for="${k + 'Up'}">${v}</label></li>`;
+                })
+                page.alertDanger.formSignUp.append(str);
+              }
+            })
+  }
+
+  page.commands.SignIn = () => {
+    let userSignIn = {
+      username: page.elements.usernameIn.val(),
+      password:  page.elements.passwordIn.val()
+    }
+
+    page.alertDanger.formSignIn.removeClass("show").addClass("hide").empty();
+    $.ajax({
+      headers: {
+        "accept": "application/json",
+        "content-type": "application/json"
+      },
+      type: "POST",
+      url: page.urls.signIn,
+      data: JSON.stringify(userSignIn)
+    })
+            .done((data) => {
+
+              App.SweetAlert.showAlertSuccess("Đăng nhập thành công!");
+
+              setTimeout(function () {
+                // page.commands.resetFormSignIn();
+                // page.commands.resetFormSignUp();
+                window.location.href = "/";
+              }, 1000);
+            })
+            .fail((jqXHR) => {
+              page.alertDanger.formSignIn.removeClass("hide").addClass("show").empty();
+              let errors = jqXHR.responseJSON;
+              if (errors) {
+                let str = "";
+                $.each(errors, (k, v) => {
+                  str += `<li><label for="${k + 'In'}">${v}</label></li>`;
+                })
+                page.alertDanger.formSignIn.append(str);
+              }
+            })
+  }
+
+
+
+  page.elements.formSignUp.validate({
+    rules: {
+      usernameUp: {
+        required: true,
+        regex: /^[A-Za-z0-9.]*[A-Za-z0-9]+@[A-Za-z0-9]+(\.[A-Za-z0-9]+).*$/,
+        maxlength: 50
+      },
+      passwordUp: {
+        required: true,
+        maxlength: 30
+      },
+
+    },
+    messages: {
+      usernameUp: {
+        required: "Tên đăng nhập là bắt buộc",
+        regex: "Tên đăng nhập có dạng email (vd:HieuCodeg@leetCode.com)",
+        maxlength: "Họ tên có độ dài tối đa là 50 ký tự"
+      },
+      passwordUp: {
+        required: "Mật khẩu là bắt buộc",
+        maxlength: "Mật khẩu có độ dài tối đa 30 ký tự"
+      },
+
+    },
+    submitHandler: function () {
+      page.commands.SignUp();
+    }
+  })
+
+  page.elements.formSignIn.validate({
+    rules: {
+      usernameIn: {
+        required: true,
+        regex: /^[A-Za-z0-9.]*[A-Za-z0-9]+@[A-Za-z0-9]+(\.[A-Za-z0-9]+).*$/,
+        maxlength: 50
+      },
+      passwordIn: {
+        required: true,
+        maxlength: 30
+      },
+
+    },
+    messages: {
+      usernameIn: {
+        required: "Tên đăng nhập là bắt buộc",
+        regex: "Tên đăng nhập có dạng email (vd:HieuCodeg@leetCode.com)",
+        maxlength: "Họ tên có độ dài tối đa là 50 ký tự"
+      },
+      passwordIn: {
+        required: "Mật khẩu là bắt buộc",
+        maxlength: "Mật khẩu có độ dài tối đa 30 ký tự"
+      },
+
+    },
+    submitHandler: function () {
+      page.commands.SignIn();
+    }
+  })
+
+
+
+  page.commands.loadData = () => {
+    page.commands.getAllRoles();
+    $.validator.addMethod(
+            "regex",
+            function(value, element, regexp) {
+              var check = false;
+              return this.optional(element) || regexp.test(value);
+            },
+            "Please check your input."
+    );
+  }
+
+  $(() => {
+    page.commands.loadData();
+  });
+
+
+
+</script>
+</body>
+</html>

@@ -17,8 +17,12 @@
 						<li><a href="#"><i class="fa fa-map-marker"></i> 28 Nguyễn Tri Phương</a></li>
 					</ul>
 					<ul class="header-links pull-right">
-						<li><a href="#"><i class="fa fa-dollar"></i> ĐĂNG NHẬP</a></li>
-						<li><a href="#"><i class="fa fa-user-o"></i> ĐĂNG KÝ</a></li>
+						<li>
+							<span style="color: white"><th:block th:text="${username}"/></span>
+						</li>
+						<li><a href="/web/login"><i class="fa fa-dollar"></i> ĐĂNG NHẬP</a></li>
+						<li><a href="#" id="btnShowCreateModal"><i class="fa fa-user-o"></i> ĐĂNG KÝ</a></li>
+						<li><a href="/logout" ><i class="fa fa-lock"></i> ĐĂNG XUẤT</a></li>
 					</ul>
 				</div>
 			</div>
@@ -141,7 +145,7 @@
 					<!-- NAV -->
 					<ul class="main-nav nav navbar-nav">
 						<li class="active"><a href="#">Trang chủ</a></li>
-						<li><a href="#">Ưu đãi</a></li>
+						<li><a href="/web/store">Sản phẩm</a></li>
 						<li><a href="#">Thể loại</a></li>
 						<li><a href="#">Laptops</a></li>
 						<li><a href="#">Điện thoại</a></li>
@@ -820,11 +824,13 @@
 			<!-- /container -->
 		</div>
 		<!-- /NEWSLETTER -->
-
+		<div class="loader hide"></div>
 		<!-- FOOTER -->
 		<th:block th:replace="/layout/web/footer :: footer"/>
 		<!-- /FOOTER -->
-
+		<!--Create Modal -->
+		<th:block th:replace="/web/modalRegister :: modalRegister"/>
+		<!--Update Modal -->
 		<!-- jQuery Plugins -->
 		<th:block th:replace="/layout/web/script :: script"/>
 
@@ -833,6 +839,7 @@
 		const page = {
 			urls: {
 				getAllProducts: App.PRODUCTSWEB_API,
+				getTop5Products: App.PRODUCTSWEB_API + "/top5",
 				getProductById: App.PRODUCTSWEB_API,
 				createProduct: App.PRODUCTSWEB_API,
 				updateProduct: App.PRODUCTSWEB_API + "/update",
@@ -858,14 +865,14 @@
 
 		let product = new Product();
 
-		page.commands.getAllProducts = async () => {
+		page.commands.getTop5Products = async () => {
 			$.ajax({
 				headers: {
 					"accept": "application/json",
 					"content-type": "application/json"
 				},
 				type: "GET",
-				url: page.urls.getAllProducts
+				url: page.urls.getTop5Products
 			})
 					.done((data) => {
 
@@ -900,27 +907,32 @@
 		}
 
 		function renderProduct(product, avatar) {
-			return `<div class="product" id="tr_${product.id}">
+			let result = `<div class="product" id="tr_${product.id}">
 					   <div class="product-img">
-						<img src="${App.SERVER_CLOUDINARY + App.SCALE_W150_H150_Q100 + "/" + avatar.fileFolder + "/" + avatar.fileName}" alt="">
+						<img src="${App.SERVER_CLOUDINARY + "/" + avatar.fileFolder + "/" + avatar.fileName}" alt="">
 						<div class="product-label">
-						 <span class="sale">-30%</span>
-						 <span class="new">NEW</span>
-						</div>
+			`;
+			if (product.discount != null) {
+				result += `<span class="sale">-${product.discount}%</span>
+			`;}
+			if (product.newCheck != null) {
+				result += `<span class="new">NEW</span>
+			`;}
+			result += `</div>
 					   </div>
 					   <div class="product-body">
-						<p class="product-category">Category</p>
+						<p class="product-category">${product.category.name}</p>
 						<h3 class="product-name"><a href="#">${product.title}</a></h3>
 						<h4 class="product-price">
 							${new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(product.price)}
+			`;
 
-							<del class="product-old-price" >
-							${new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(product.price)}
+			if (product.oldPrice != null) {
+				result += `<del class="product-old-price" >
+							${new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(product.oldPrice)}
 							</del>
-
-
-
-						</h4>
+			`;}
+			result += `</h4>
 						<div class="product-rating">
 						 <i class="fa fa-star"></i>
 						 <i class="fa fa-star"></i>
@@ -939,6 +951,8 @@
 					   </div>
 					  </div>
                 `;
+
+			return result;
 		}
 
 		page.commands.handleEventShow = () => {
@@ -1123,7 +1137,7 @@
 
 
 		page.commands.loadData = () => {
-			page.commands.getAllProducts();
+			page.commands.getTop5Products();
 		}
 
 		page.initializeEventControl = () => {

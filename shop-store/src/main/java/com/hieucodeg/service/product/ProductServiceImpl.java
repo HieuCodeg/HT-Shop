@@ -13,6 +13,8 @@ import com.hieucodeg.service.category.ICategoryService;
 import com.hieucodeg.service.upload.UploadService;
 import com.hieucodeg.utils.UploadUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,6 +49,7 @@ public class ProductServiceImpl implements IProductService {
         return productRepository.findAll();
     }
 
+
     @Override
     public List<ProductDTO> getAllProductDTO() {
         return productRepository.getAllProductDTO();
@@ -55,6 +58,11 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public List<Product> findAllByDeletedIsFalse() {
         return productRepository.findAllByDeletedIsFalse();
+    }
+
+    @Override
+    public List<ProductDTO> getNewProductDTO(Pageable pageable) {
+        return productRepository.getNewProductDTO(pageable);
     }
 
     @Override

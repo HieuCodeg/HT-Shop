@@ -57,7 +57,6 @@ public class ProductAPI {
         }
         return new ResponseEntity<>(productOptional.get().toProductDTO(), HttpStatus.OK);
     }
-
     @GetMapping("/categories")
     public ResponseEntity<?> getAllCategories() {
 
@@ -116,6 +115,13 @@ public class ProductAPI {
         if (bindingResult.hasErrors()) {
             return appUtils.mapErrorToResponse(bindingResult);
         }
+        Long idCategory= Long.valueOf(productCreateDTO.getCategoryId());
+
+        Optional<Category> optionalCategory = categoryService.findById(idCategory);
+
+        if (!optionalCategory.isPresent()) {
+            throw new DataInputException("Thể loại không hợp lệ");
+        }
 
         Optional<Product> productOptional = productService.findById(productId);
 
@@ -124,10 +130,34 @@ public class ProductAPI {
         }
         Product product = productOptional.get();
 
+        if (productCreateDTO.getDiscount().isEmpty()) {
+            productCreateDTO.setDiscount(null);
+        }
+        if (productCreateDTO.getOldPrice().isEmpty()) {
+            productCreateDTO.setOldPrice(null);
+        }
+
         product.setTitle(productCreateDTO.getTitle());
         product.setPrice(BigDecimal.valueOf(Long.valueOf(productCreateDTO.getPrice())));
         product.setQuantity(Long.valueOf(productCreateDTO.getQuantity()));
         product.setDescription(productCreateDTO.getDescription());
+
+        if (productCreateDTO.getDiscount() != null) {
+            product.setDiscount(Long.valueOf(productCreateDTO.getDiscount()));
+        } else {
+            product.setDiscount(null);
+        }
+        if (productCreateDTO.getNewCheck() != null) {
+            product.setNewCheck(productCreateDTO.getNewCheck());
+        } else {
+            product.setNewCheck(null);
+        }
+        if (productCreateDTO.getOldPrice() != null) {
+            product.setOldPrice(BigDecimal.valueOf(Long.parseLong(productCreateDTO.getOldPrice())));
+        } else {
+            product.setOldPrice(null);
+        }
+        product.setCategory(optionalCategory.get());
 
 
         if (productCreateDTO.getFile() == null) {

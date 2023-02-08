@@ -1,0 +1,178 @@
+body {
+    margin: 0 auto;
+}
+/*.container {*/
+/*    padding-bottom: 25%;*/
+/*}*/
+.container-fluid {
+    padding: 0 !important;
+}
+
+.table-title {
+    background: #299be4;
+    color: #fff;
+    padding: 16px 30px;
+    border-radius: 3px 3px 0 0;
+}
+
+.table-title .btn {
+    float: right;
+    min-width: 50px;
+    outline: none !important;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+table th {
+    background-color: #4CAF50 !important;
+    color: #fff;
+    border: 1px solid #ddd;
+    text-align: center;
+    cursor: pointer;
+}
+table thead th {
+    border: 0 solid #ddd;
+}
+
+.table > tbody > tr > td {
+    vertical-align: middle;
+}
+table tbody td {
+    border: 0 solid #ddd;
+}
+
+[title="Deposit"]:hover {
+    background-color: green;
+    color: white;
+}
+
+
+tbody>tr>td{
+    text-align: center;
+}
+
+/*tbody>tr>td:nth-child(4){*/
+/*    text-align: right;*/
+/*}*/
+
+
+tbody>tr>td:nth-child(6) a{
+    border-color: #198754;
+    color: #198754;
+}
+
+tbody>tr>td:nth-child(6) a:hover{
+    background-color: #198754;
+    color: white;
+}
+
+tbody>tr>td:nth-child(9) a{
+    border-color: orange;
+    color: orange;
+}
+
+tbody>tr>td:nth-child(9) a:hover{
+    background-color: orange;
+    color: white;
+}
+
+tbody>tr>td:nth-child(10) a{
+    border-color: rgb(69, 69, 249);
+    color:  rgb(61, 61, 253);
+}
+
+tbody>tr>td:nth-child(10) a:hover{
+    background-color: rgb(78, 78, 246);
+    color:  white;
+}
+
+tbody>tr>td:nth-child(7) a{
+    border-color:rgb(244, 63, 63);
+    color: rgb(244, 67, 67);
+}
+
+
+tbody>tr>td:nth-child(7) a:hover{
+    background-color:rgb(196, 7, 7);
+    color: white;
+}
+
+.transfer-list>tbody>tr>td{
+    text-align: center;
+}
+
+.modal-header-update {
+    background-color: #17b4fb;
+    color: #fff;
+}
+.modal-header-create {
+    background-color: #08bd3e;
+    color: #fff;
+}
+.modal-header-deposit {
+    background-color: #08b676;
+    color: #fff;
+}
+.modal-header-green {
+    background-color: #8bb608;
+    color: #fff;
+}
+.modal-header-violet {
+    background-color: #7a10d0;
+    color: #fff;
+}
+.btnClose {
+    opacity: 1 !important;
+    border: 2px solid black !important;
+}
+.btnClose:hover {
+    border: 2px solid #ffffff !important;
+}
+label.error {
+    color: red;
+    font-style: italic;
+}
+.modal-alert-danger {
+    padding: 10px 35px;
+    margin-bottom: 15px;
+    color: #842029;
+    background-color: #f8d7da;
+    border-color: #f5c2c7;
+}
+.hide {
+    background-color: white;
+    padding: 0;
+    display: none;
+}
+.hiden {
+    display: none;
+}
+.show {
+    display: block !important;
+}
+
+/*Start Loader*/
+.loader {
+    position: absolute;
+    z-index: 1070;
+    top: 50%;
+    left: 50%;
+    border: 10px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 10px solid #3498db;
+    width: 50px;
+    height: 50px;
+    -webkit-animation: spin 1s linear infinite; /* Safari */
+    animation: spin 1s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+/*End Loader*/

@@ -8,6 +8,8 @@ class App {
 
     static ROLE_API = this.DOMAIN_SERVER + "/api/auth/roles";
     static SIGNUP_API = this.DOMAIN_SERVER + "/api/auth/register";
+
+
     static SIGNIN_API = this.DOMAIN_SERVER + "/api/auth/login";
 
     static SERVER_CLOUDINARY = "https://res.cloudinary.com/dm86rpua0/image/upload";
@@ -16,6 +18,7 @@ class App {
 
     static PRODUCTS_API = this.DOMAIN_SERVER + "/admin/api/products";
     static PRODUCTSWEB_API = this.DOMAIN_SERVER + "/web/api/products";
+    static CUSTOMERWEB_API = this.DOMAIN_SERVER + "/web/api/customers";
     static STAFF_API = this.DOMAIN_SERVER + "/api/staffs";
 
     static AlertMessageVi = class {

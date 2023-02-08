@@ -1,0 +1,205 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Login HT Shop</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="/assets/login/admin/css/style.css">
+
+</head>
+<body class="img js-fullheight" style="background-image: url(/assets/login/admin/images/bg.jpg);">
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center mb-5">
+                <h2 class="heading-section">HT SHOP</h2>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <div class="login-wrap p-0">
+                    <h3 class="mb-4 text-center">Chưa có tài khoản?</h3>
+                    <form id="formSignIn" method="post" class="signin-form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Username" required id="usernameIn"
+                                   name="usernameIn">
+                        </div>
+                        <div class="form-group">
+                            <input id="password-field" type="password" class="form-control" placeholder="Password"
+                                   required name="passwordIn">
+                            <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="form-control btn btn-primary submit px-3" id="btnSignIn">Sign
+                                In
+                            </button>
+                        </div>
+                        <div class="form-group d-md-flex">
+                            <div class="w-50">
+                                <label class="checkbox-wrap checkbox-primary">Remember Me
+                                    <input type="checkbox" checked>
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="w-50 text-md-right">
+                                <a href="#" style="color: #fff">Forgot Password</a>
+                            </div>
+                        </div>
+                    </form>
+                    <p class="w-100 text-center">&mdash; Or Sign In With &mdash;</p>
+                    <div class="social d-flex text-center">
+                        <a href="#" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span>
+                            Facebook</a>
+                        <a href="#" class="px-2 py-2 ml-md-1 rounded"><span class="ion-logo-twitter mr-2"></span>
+                            Twitter</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="/assets/login/admin/js/jquery.min.js"></script>
+<script src="/assets/login/admin/js/popper.js"></script>
+<script src="/assets/login/admin/js/bootstrap.min.js"></script>
+<script src="/assets/login/admin/js/main.js"></script>
+<script src="/assets/sweetalert2/sweetalert2@11.js"></script>
+
+<script src="/assets/jquery/jquery.validate-1.19.5.min.js"></script>
+<script src="/assets/js/app.js"></script>
+<script>
+
+    const page = {
+        urls: {
+            signUp: App.SIGNUP_API,
+            signIn: App.SIGNIN_API
+        },
+        elements: {},
+        loadData: {},
+        commands: {},
+        alertDanger: {},
+        dialogs: {
+            elements: {},
+            loadData: {},
+            commands: {},
+            alertDanger: {}
+        },
+        initializeEventControl: {}
+    }
+
+    page.elements.formSignIn = $("#formSignIn")
+    page.elements.usernameIn = $("#usernameIn")
+    page.elements.passwordIn = $("#password-field")
+    page.elements.btnSignIn = $("#btnSignIn")
+    page.alertDanger.formSignIn = $("#modalSignIn .modal-alert-danger");
+
+    let user = new User();
+
+
+    page.elements.btnSignIn.on("click", () => {
+        page.elements.formSignIn.trigger("submit");
+    })
+
+
+    page.commands.resetFormSignIn = () => {
+        page.elements.formSignIn[0].reset();
+        page.elements.formSignIn.validate().resetForm();
+        page.alertDanger.formSignIn.removeClass("show").addClass("hide").empty();
+    }
+
+    page.commands.SignIn = () => {
+        let userSignIn = {
+            username: page.elements.usernameIn.val(),
+            password: page.elements.passwordIn.val()
+        }
+
+        page.alertDanger.formSignIn.removeClass("show").addClass("hide").empty();
+        $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "POST",
+            url: page.urls.signIn,
+            data: JSON.stringify(userSignIn)
+        })
+            .done((data) => {
+
+                App.SweetAlert.showAlertSuccess("Đăng nhập thành công!");
+
+                setTimeout(function () {
+                    // page.commands.resetFormSignIn();
+                    // page.commands.resetFormSignUp();
+                    window.location.href = "/";
+                }, 1000);
+            })
+            .fail((jqXHR) => {
+                page.alertDanger.formSignIn.removeClass("hide").addClass("show").empty();
+                let errors = jqXHR.responseJSON;
+                if (errors) {
+                    let str = "";
+                    $.each(errors, (k, v) => {
+                        str += `<li><label for="${k + 'In'}">${v}</label></li>`;
+                    })
+                    page.alertDanger.formSignIn.append(str);
+                }
+            })
+    }
+
+
+    page.elements.formSignIn.validate({
+        rules: {
+            usernameIn: {
+                required: true,
+                regex: /^[A-Za-z0-9.]*[A-Za-z0-9]+@[A-Za-z0-9]+(\.[A-Za-z0-9]+).*$/,
+                maxlength: 50
+            },
+            passwordIn: {
+                required: true,
+                maxlength: 30
+            },
+
+        },
+        messages: {
+            usernameIn: {
+                required: "Tên đăng nhập là bắt buộc",
+                regex: "Tên đăng nhập có dạng email (vd:HieuCodeg@leetCode.com)",
+                maxlength: "Họ tên có độ dài tối đa là 50 ký tự"
+            },
+            passwordIn: {
+                required: "Mật khẩu là bắt buộc",
+                maxlength: "Mật khẩu có độ dài tối đa 30 ký tự"
+            },
+
+        },
+        submitHandler: function () {
+            page.commands.SignIn();
+        }
+    })
+
+
+    page.commands.loadData = () => {
+        $.validator.addMethod(
+            "regex",
+            function (value, element, regexp) {
+                var check = false;
+                return this.optional(element) || regexp.test(value);
+            },
+            "Please check your input."
+        );
+    }
+
+    $(() => {
+        page.commands.loadData();
+    });
+
+
+</script>
+</body>
+</html>
+

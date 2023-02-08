@@ -62,8 +62,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.httpBasic().authenticationEntryPoint(restServicesEntryPoint());
 
         http.authorizeRequests()
-                .antMatchers("/", "/api/auth/login","/api/auth/roles", "/api/auth/register", "/login", "/logout").permitAll()
+                .antMatchers("/","/web/**", "/api/auth/login","/api/auth/roles", "/api/auth/register", "/login", "/logout").permitAll()
                 .antMatchers("/transfer-history","/api/customers/delete/{customerId}").hasAnyAuthority("ADMIN")
+                .antMatchers("/admin/staffs").hasAnyAuthority("ADMIN")
+                .antMatchers("/admin/products").hasAnyAuthority("ADMIN")
+                .antMatchers("/admin/**").hasAnyAuthority("ADMIN","STAFF")
                 .antMatchers("/resources/**", "/assets/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -76,7 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/login")
+                .logoutSuccessUrl("/web")
                 .deleteCookies("JWT")
                 .invalidateHttpSession(true)
                 ;

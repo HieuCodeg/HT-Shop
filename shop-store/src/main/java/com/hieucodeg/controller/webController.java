@@ -23,4 +23,22 @@ public class webController {
 
         return modelAndView;
     }
+
+    @GetMapping("/store")
+    public ModelAndView showStorePage() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("web/store");
+
+        String username = appUtils.getPrincipalUsername();
+
+        modelAndView.addObject("username", username);
+
+        return modelAndView;
+    }
+    @GetMapping("/login")
+    public ModelAndView showLoginPage() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("web/login");
+        return modelAndView;
+    }
 }

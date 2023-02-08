@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<th:block th:replace="/layout/web/head :: head"/>
+		<title>Electro - HT Shop</title>
+
+    </head>
+	<body>
+		<!-- HEADER -->
+		<header>
+			<!-- TOP HEADER -->
+			<div id="top-header">
+				<div class="container">
+					<ul class="header-links pull-left">
+						<li><a href="#"><i class="fa fa-phone"></i> +014-08-96-99</a></li>
+						<li><a href="#"><i class="fa fa-envelope-o"></i> HieuCodeg@codegym.com</a></li>
+						<li><a href="#"><i class="fa fa-map-marker"></i> 28 Nguyễn Tri Phương</a></li>
+					</ul>
+					<ul class="header-links pull-right">
+						<li><a href="/web/login"><i class="fa fa-dollar"></i> ĐĂNG NHẬP</a></li>
+						<li><a href="#" id="btnShowCreateModal"><i class="fa fa-user-o"></i> ĐĂNG KÝ</a></li>
+						<li><a href="/logout" ><i class="fa fa-lock"></i> ĐĂNG XUẤT</a></li>
+					</ul>
+				</div>
+			</div>
+			<!-- /TOP HEADER -->
+
+			<!-- MAIN HEADER -->
+			<div id="header">
+				<!-- container -->
+				<div class="container">
+					<!-- row -->
+					<div class="row">
+						<!-- LOGO -->
+						<div class="col-md-3">
+							<div class="header-logo">
+								<a href="#" class="logo">
+									<img src="/assets/web/img/logo.png" alt="">
+								</a>
+							</div>
+						</div>
+						<!-- /LOGO -->
+
+						<!-- SEARCH BAR -->
+						<div class="col-md-6">
+							<div class="header-search">
+								<form>
+									<select class="input-select">
+										<option value="0">Thể loại</option>
+										<option value="1">Loại 01</option>
+										<option value="1">Loại 02</option>
+									</select>
+									<input class="input" placeholder="Tìm kiếm ở đây">
+									<button class="search-btn">Tìm kiếm</button>
+								</form>
+							</div>
+						</div>
+						<!-- /SEARCH BAR -->
+
+						<!-- ACCOUNT -->
+						<div class="col-md-3 clearfix">
+							<div class="header-ctn">
+								<!-- Wishlist -->
+								<div>
+									<a href="#">
+										<i class="fa fa-heart-o"></i>
+										<span>Yêu thích</span>
+										<div class="qty">2</div>
+									</a>
+								</div>
+								<!-- /Wishlist -->
+
+								<!-- Cart -->
+								<div class="dropdown">
+									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+										<i class="fa fa-shopping-cart"></i>
+										<span>Giỏ hàng</span>
+										<div class="qty">3</div>
+									</a>
+									<div class="cart-dropdown">
+										<div class="cart-list">
+											<div class="product-widget">
+												<div class="product-img">
+													<img src="/assets/web/img/product01.png" alt="">
+												</div>
+												<div class="product-body">
+													<h3 class="product-name"><a href="#">product name goes here</a></h3>
+													<h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
+												</div>
+												<button class="delete"><i class="fa fa-close"></i></button>
+											</div>
+
+											<div class="product-widget">
+												<div class="product-img">
+													<img src="/assets/web/img/product02.png" alt="">
+												</div>
+												<div class="product-body">
+													<h3 class="product-name"><a href="#">product name goes here</a></h3>
+													<h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
+												</div>
+												<button class="delete"><i class="fa fa-close"></i></button>
+											</div>
+										</div>
+										<div class="cart-summary">
+											<small>2 sản phẩm</small>
+											<h5>Tổng tền: $2940.00</h5>
+										</div>
+										<div class="cart-btns">
+											<a href="#">Chi tiết</a>
+											<a href="#">Mua hàng  <i class="fa fa-arrow-circle-right"></i></a>
+										</div>
+									</div>
+								</div>
+								<!-- /Cart -->
+
+								<!-- Menu Toogle -->
+								<div class="menu-toggle">
+									<a href="#">
+										<i class="fa fa-bars"></i>
+										<span>Menu</span>
+									</a>
+								</div>
+								<!-- /Menu Toogle -->
+							</div>
+						</div>
+						<!-- /ACCOUNT -->
+					</div>
+					<!-- row -->
+				</div>
+				<!-- container -->
+			</div>
+			<!-- /MAIN HEADER -->
+		</header>
+		<!-- /HEADER -->
+
+		<!-- NAVIGATION -->
+		<nav id="navigation">
+			<!-- container -->
+			<div class="container">
+				<!-- responsive-nav -->
+				<div id="responsive-nav">
+					<!-- NAV -->
+					<ul class="main-nav nav navbar-nav">
+						<li><a href="/web">Trang chủ</a></li>
+						<li class="active"><a href="/web/store">Sản phẩm</a></li>
+						<li><a href="#">Thể loại</a></li>
+						<li><a href="#">Laptops</a></li>
+						<li><a href="#">Điện thoại</a></li>
+						<li><a href="#">Máy ảnh</a></li>
+						<li><a href="#">Phụ kiện</a></li>
+					</ul>
+					<!-- /NAV -->
+				</div>
+				<!-- /responsive-nav -->
+			</div>
+			<!-- /container -->
+		</nav>
+		<!-- /NAVIGATION -->
+		<!-- BREADCRUMB -->
+		<div id="breadcrumb" class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<div class="col-md-12">
+						<ul class="breadcrumb-tree">
+							<li><a href="#">Trang chủ</a></li>
+							<li><a href="#">Sản phẩm</a></li>
+							<li><a href="#">Tất cả thể loại</a></li>
+							<li class="active">Điện tử (227,490 kết qủa)</li>
+						</ul>
+					</div>
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /BREADCRUMB -->
+
+		<!-- SECTION -->
+		<div class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<!-- ASIDE -->
+					<div id="aside" class="col-md-3">
+						<!-- aside Widget -->
+						<div class="aside">
+							<h3 class="aside-title">Danh mục</h3>
+							<div class="checkbox-filter">
+
+								<div class="input-checkbox">
+									<input type="checkbox" id="category-1">
+									<label for="category-1">
+										<span></span>
+										Laptops
+										<small>(120)</small>
+									</label>
+								</div>
+
+								<div class="input-checkbox">
+									<input type="checkbox" id="category-2">
+									<label for="category-2">
+										<span></span>
+										Điện thoại
+										<small>(740)</small>
+									</label>
+								</div>
+
+								<div class="input-checkbox">
+									<input type="checkbox" id="category-3">
+									<label for="category-3">
+										<span></span>
+										Máy ảnh
+										<small>(1450)</small>
+									</label>
+								</div>
+
+								<div class="input-checkbox">
+									<input type="checkbox" id="category-4">
+									<label for="category-4">
+										<span></span>
+										phụ kiện
+										<small>(578)</small>
+									</label>
+								</div>
+
+								<div class="input-checkbox">
+									<input type="checkbox" id="category-5">
+									<label for="category-5">
+										<span></span>
+										Đồng hồ
+										<small>(120)</small>
+									</label>
+								</div>
+
+								<div class="input-checkbox">
+									<input type="checkbox" id="category-6">
+									<label for="category-6">
+										<span></span>
+										Ti vi
+										<small>(740)</small>
+									</label>
+								</div>
+							</div>
+						</div>
+						<!-- /aside Widget -->
+
+						<!-- aside Widget -->
+						<div class="aside">
+							<h3 class="aside-title">Giá</h3>
+							<div class="price-filter">
+								<div id="price-slider"></div>
+								<div class="input-number price-min">
+									<input id="price-min" type="number">
+									<span class="qty-up">+</span>
+									<span class="qty-down">-</span>
+								</div>
+								<span>-</span>
+								<div class="input-number price-max">
+									<input id="price-max" type="number">
+									<span class="qty-up">+</span>
+									<span class="qty-down">-</span>
+								</div>
+							</div>
+						</div>
+						<!-- /aside Widget -->
+
+						<!-- aside Widget -->
+						<div class="aside">
+							<h3 class="aside-title">Tên hãng</h3>
+							<div class="checkbox-filter">
+								<div class="input-checkbox">
+									<input type="checkbox" id="brand-1">
+									<label for="brand-1">
+										<span></span>
+										SAMSUNG
+										<small>(578)</small>
+									</label>
+								</div>
+								<div class="input-checkbox">
+									<input type="checkbox" id="brand-2">
+									<label for="brand-2">
+										<span></span>
+										LG
+										<small>(125)</small>
+									</label>
+								</div>
+								<div class="input-checkbox">
+									<input type="checkbox" id="brand-3">
+									<label for="brand-3">
+										<span></span>
+										SONY
+										<small>(755)</small>
+									</label>
+								</div>
+								<div class="input-checkbox">
+									<input type="checkbox" id="brand-4">
+									<label for="brand-4">
+										<span></span>
+										SAMSUNG
+										<small>(578)</small>
+									</label>
+								</div>
+								<div class="input-checkbox">
+									<input type="checkbox" id="brand-5">
+									<label for="brand-5">
+										<span></span>
+										LG
+										<small>(125)</small>
+									</label>
+								</div>
+								<div class="input-checkbox">
+									<input type="checkbox" id="brand-6">
+									<label for="brand-6">
+										<span></span>
+										SONY
+										<small>(755)</small>
+									</label>
+								</div>
+							</div>
+						</div>
+						<!-- /aside Widget -->
+
+						<!-- aside Widget -->
+						<div class="aside">
+							<h3 class="aside-title">Bán chạy</h3>
+							<div class="product-widget">
+								<div class="product-img">
+									<img src="/assets/web/img/product01.png" alt="">
+								</div>
+								<div class="product-body">
+									<p class="product-category">Laptops</p>
+									<h3 class="product-name"><a href="#">Laptop DELL 5520</a></h3>
+									<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+								</div>
+							</div>
+
+							<div class="product-widget">
+								<div class="product-img">
+									<img src="/assets/web/img/product02.png" alt="">
+								</div>
+								<div class="product-body">
+									<p class="product-category">Tai nghe</p>
+									<h3 class="product-name"><a href="#">Tai nghe siêu thanh</a></h3>
+									<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+								</div>
+							</div>
+
+							<div class="product-widget">
+								<div class="product-img">
+									<img src="/assets/web/img/product03.png" alt="">
+								</div>
+								<div class="product-body">
+									<p class="product-category">Laptops</p>
+									<h3 class="product-name"><a href="#">Laptop XPS VESTRO</a></h3>
+									<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+								</div>
+							</div>
+						</div>
+						<!-- /aside Widget -->
+					</div>
+					<!-- /ASIDE -->
+
+					<!-- STORE -->
+					<div id="store" class="col-md-9">
+						<!-- store top filter -->
+						<div class="store-filter clearfix">
+							<div class="store-sort">
+								<label>
+									Danh mục:
+									<select id="categoryCre" name="categoryCre" class="form-control form-select">
+									</select>
+								</label>
+
+							</div>
+							<ul class="store-grid">
+								<li class="active"><i class="fa fa-th"></i></li>
+								<li><a href="#"><i class="fa fa-th-list"></i></a></li>
+							</ul>
+						</div>
+						<!-- /store top filter -->
+
+						<!-- store products -->
+						<div class="row" id="tbNewProduct">
+
+
+						</div>
+
+						<!-- /store products -->
+
+						<!-- store bottom filter -->
+						<div class="store-filter clearfix">
+							<span class="store-qty">Showing 20-100 products</span>
+							<ul class="store-pagination">
+								<li class="active">1</li>
+								<li><a href="#">2</a></li>
+								<li><a href="#">3</a></li>
+								<li><a href="#">4</a></li>
+								<li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+							</ul>
+						</div>
+						<!-- /store bottom filter -->
+					</div>
+					<!-- /STORE -->
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /SECTION -->
+
+		<!-- NEWSLETTER -->
+		<div id="newsletter" class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<div class="col-md-12">
+						<div class="newsletter">
+							<p>Đăng kí để nhận <strong>TIN KHUYẾN MÃI</strong></p>
+							<form>
+								<input class="input" type="email" placeholder="Nhập email của bạn">
+								<button class="newsletter-btn"><i class="fa fa-envelope"></i> Theo dõi</button>
+							</form>
+							<ul class="newsletter-follow">
+								<li>
+									<a href="#"><i class="fa fa-facebook"></i></a>
+								</li>
+								<li>
+									<a href="#"><i class="fa fa-twitter"></i></a>
+								</li>
+								<li>
+									<a href="#"><i class="fa fa-instagram"></i></a>
+								</li>
+								<li>
+									<a href="#"><i class="fa fa-pinterest"></i></a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /NEWSLETTER -->
+		<div class="loader hide"></div>
+		<!-- FOOTER -->
+		<th:block th:replace="/layout/web/footer :: footer"/>
+		<!-- /FOOTER -->
+		<!--Create Modal -->
+		<th:block th:replace="/web/modalRegister :: modalRegister"/>
+		<!--Update Modal -->
+		<!-- jQuery Plugins -->
+		<th:block th:replace="/layout/web/script :: script"/>
+	</body>
+	<script>
+		const page = {
+			urls: {
+				getAllProducts: App.PRODUCTSWEB_API,
+				getTop5Products: App.PRODUCTSWEB_API + "/top5",
+				getProductById: App.PRODUCTSWEB_API,
+				createProduct: App.PRODUCTSWEB_API,
+				updateProduct: App.PRODUCTSWEB_API + "/update",
+				deleteProduct:  App.PRODUCTSWEB_API + "/delete",
+				getAllCategories: App.PRODUCTSWEB_API + "/categories",
+
+				getAllProvinces: App.PROVINCE_API,
+				getAllDistricts: App.DISTRICT_API,
+				getAllWards: App.WARD_API,
+
+				createCustomer: App.CUSTOMERWEB_API,
+
+			},
+			elements: {},
+			loadData: {},
+			commands: {},
+			dialogs: {
+				elements: {},
+				loadData: {},
+				commands: {},
+				alertDanger: {}
+			},
+			initializeEventControl: {}
+		}
+
+		page.elements.loader = $(".loader");
+
+		page.elements.btnShowCreateModal = $("#btnShowCreateModal");
+
+		page.elements.tbNewProduct = $("#tbNewProduct");
+		page.elements.tbProductBody = $("#tbProduct tbody");
+		page.dialogs.elements.categoryCre = $("#categoryCre");
+
+		page.dialogs.elements.modalCreate = $("#modalCreate");
+		page.dialogs.elements.frmCreateCustomer = $("#frmCreateCustomer");
+		page.dialogs.elements.fullNameCre = $("#fullNameCre");
+		page.dialogs.elements.emailCre = $("#emailCre");
+		page.dialogs.elements.phoneCre = $("#phoneCre");
+		page.dialogs.elements.addressCre = $("#addressCre");
+		page.dialogs.elements.btnCreate = $("#btnCreate");
+		page.dialogs.elements.provinceCre = $("#provinceCre");
+		page.dialogs.elements.districtCre = $("#districtCre");
+		page.dialogs.elements.wardCre = $("#wardCre");
+		page.dialogs.elements.addressCre = $("#addressCre");
+
+		page.dialogs.elements.passwordCre = $("#passwordCre");
+
+		page.dialogs.alertDanger.modalCreate = $("#modalCreate .modal-body .modal-alert-danger");
+
+
+		page.dialogs.elements.wrapper = $("#frmCreateCustomer section .wrappers");
+		page.dialogs.elements.imageFile = $("#imageFile");
+		page.dialogs.elements.wrapperContent = $("#frmCreateCustomer section .wrappers .content");
+		page.dialogs.elements.imagePreview = $("#frmCreateCustomer section .image-preview canvas");
+		page.dialogs.elements.canvas = $("#canvas");
+		page.dialogs.elements.context = page.dialogs.elements.canvas[0].getContext('2d');
+		page.dialogs.elements.imagePreview.css("display", "none");
+		page.dialogs.elements.divImagePreview = $("#frmCreateCustomer div.image-preview,#frmCreateCustomer div.file-name");
+		page.dialogs.elements.btnClearImagePreview = $("#frmCreateCustomer .clear-image-preview i");
+
+		let product = new Product();
+		let customer = new Customer();
+		let locationRegion = new LocationRegion();
+		let user = new User();
+
+		page.commands.getAllProducts = async () => {
+			$.ajax({
+				headers: {
+					"accept": "application/json",
+					"content-type": "application/json"
+				},
+				type: "GET",
+				url: page.urls.getAllProducts
+			})
+					.done((data) => {
+
+						$.each(data, (i, item) => {
+
+							let product = item;
+
+							let avatar = product.avatar;
+							let str = renderProduct(product, avatar);
+
+							page.elements.tbNewProduct.prepend(str);
+						})
+
+						page.commands.handleEventShow();
+					})
+					.fail((error) => {
+						console.error(error);
+					})
+		}
+		page.commands.getAllCategories = () => {
+			$.ajax({
+				headers: {
+					"accept": "application/json",
+					"content-type": "application/json"
+				},
+				type: "GET",
+				url: page.urls.getAllCategories
+			})
+					.done((data) => {
+
+						page.dialogs.elements.categoryCre.empty()
+
+						data.map(item => {
+							let str = `<option value="${item.id}">${item.name}</option>`;
+							page.dialogs.elements.categoryCre.append(str);
+						})
+					})
+					.fail((error) => {
+						console.error(error);
+					})
+		}
+
+		page.commands.getAllProvinces = (objEnd) => {
+			return  $.ajax({
+				headers: {
+					"accept": "application/json",
+					"content-type": "application/json"
+				},
+				type: "GET",
+				url: page.urls.getAllProvinces
+			})
+					.done((data) => {
+
+						$(`#province${objEnd}`).empty()
+
+						let results = data.results;
+
+						results.map(item => {
+							let str = `<option value="${item.province_id}">${item.province_name}</option>`;
+							$(`#province${objEnd}`).append(str);
+						})
+					})
+					.fail((error) => {
+						App.SweetAlert.showAlertError("Lỗi hệ thống, không tìm thấy thông tin tỉnh");
+					})
+		}
+		page.commands.getAllDistricts = (provinceId,objEnd) => {
+			return  $.ajax({
+				headers: {
+					"accept": "application/json",
+					"content-type": "application/json"
+				},
+				type: "GET",
+				url: page.urls.getAllDistricts + provinceId
+			})
+					.done((data) => {
+						$(`#district${objEnd}`).empty()
+
+						let results = data.results;
+
+						results.map(item => {
+							let str = `<option value="${item.district_id}">${item.district_name}</option>`;
+							$(`#district${objEnd}`).append(str);
+						})
+					})
+					.fail((error) => {
+						App.SweetAlert.showAlertError("Lỗi hệ thống, không tìm thấy thông tin quận, huyện");
+					})
+		}
+		page.commands.getAllWards = (districtId,objEnd) => {
+			return  $.ajax({
+				headers: {
+					"accept": "application/json",
+					"content-type": "application/json"
+				},
+				type: "GET",
+				url: page.urls.getAllWards + districtId
+			})
+					.done((data) => {
+						$(`#ward${objEnd}`).empty()
+
+						let results = data.results;
+
+						results.map(item => {
+							let str = `<option value="${item.ward_id}">${item.ward_name}</option>`;
+							$(`#ward${objEnd}`).append(str);
+						})
+					})
+					.fail((error) => {
+						App.SweetAlert.showAlertError("Lỗi hệ thống, không tìm thấy thông tin phường, xã");
+					})
+		}
+
+		page.commands.getProductById = (productId) => {
+			return $.ajax({
+				type: "GET",
+				url: page.urls.getProductById + "/" + productId
+			})
+					.done((data) => {
+
+					})
+					.fail((error) => {
+						console.error(error);
+					})
+		}
+
+		function renderProduct(product, avatar) {
+			let result = `<div class="col-md-4 col-xs-6">
+							<div class="product" id="tr_${product.id}">
+							   <div class="product-img">
+								<img src="${App.SERVER_CLOUDINARY + "/" + avatar.fileFolder + "/" + avatar.fileName}" alt="">
+								<div class="product-label">
+			`;
+			if (product.discount != null) {
+				result += `<span class="sale">-${product.discount}%</span>
+			`;}
+			if (product.newCheck != null) {
+				result += `<span class="new">NEW</span>
+			`;}
+			result += `</div>
+					   </div>
+					   <div class="product-body">
+						<p class="product-category">Category</p>
+						<h3 class="product-name"><a href="#">${product.title}</a></h3>
+						<h4 class="product-price">
+							${new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(product.price)}
+			`;
+
+			if (product.oldPrice != null) {
+				result += `<del class="product-old-price" >
+							${new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(product.oldPrice)}
+							</del>
+			`;}
+			result += `</h4>
+						<div class="product-rating">
+						 <i class="fa fa-star"></i>
+						 <i class="fa fa-star"></i>
+						 <i class="fa fa-star"></i>
+						 <i class="fa fa-star"></i>
+						 <i class="fa fa-star-o"></i>
+						</div>
+						<div class="product-btns">
+						 <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">Yêu thích</span></button>
+						 <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">Đánh giá</span></button>
+						 <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">Chi tiết</span></button>
+						</div>
+					   </div>
+					   <div class="add-to-cart">
+						<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
+					   </div>
+					  </div>
+					  </div>
+                `;
+
+			return result;
+		}
+
+		page.elements.btnShowCreateModal.on("click", () => {
+			page.dialogs.elements.modalCreate.modal("show");
+			page.dialogs.elements.btnClearImagePreview.trigger("click");
+		})
+
+		page.dialogs.elements.btnCreate.on("click", () => {
+			page.dialogs.elements.frmCreateCustomer.trigger("submit");
+		})
+
+		page.dialogs.elements.provinceCre.on("change", function() {
+			let provinceId = page.dialogs.elements.provinceCre.val();
+			page.commands.getAllDistricts(provinceId,"Cre").then( () => {
+				let districtId = page.dialogs.elements.districtCre.val();
+				page.commands.getAllWards(districtId,"Cre");
+			});
+
+		})
+		page.dialogs.elements.districtCre.on("change", function() {
+			let districtId = page.dialogs.elements.districtCre.val();
+			page.commands.getAllWards(districtId,"Cre");
+		})
+
+		$.validator.addMethod(
+				"regex",
+				function(value, element, regexp) {
+					var check = false;
+					return this.optional(element) || regexp.test(value);
+				},
+				"Please check your input."
+		);
+
+		page.dialogs.elements.frmCreateCustomer.validate({
+			rules: {
+				fullNameCre: {
+					required: true,
+					minlength: 3,
+					maxlength: 100
+				},
+				emailCre: {
+					required: true,
+					email: true
+				},
+				phoneCre: {
+					required: true
+				}
+			},
+			messages: {
+				fullNameCre: {
+					required: "Họ tên là bắt buộc",
+					minlength: "Họ tên có độ dài tối thiếu là 3 ký tự",
+					maxlength: "Họ tên có độ dài tối đa là 100 ký tự"
+				},
+				emailCre: {
+					required: "Email là bắt buộc",
+					email: "Email không tồn tại"
+				},
+				phoneCre: {
+					required: "Vui lòng nhập số điện thoại",
+				}
+			},
+			errorLabelContainer: "#modalCreate .modal-body .modal-alert-danger",
+			errorElement : "li",
+			errorPlacement: function (error, element) {
+				error.appendTo("#modalCreate .modal-body .modal-alert-danger");
+			},
+			showErrors: function(errorMap, errorList) {
+				if (this.numberOfInvalids() > 0) {
+					$("#modalCreate .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+				} else {
+					$("#modalCreate .modal-body .modal-alert-danger").removeClass("show").addClass("hide").empty();
+					$("#frmCreateProduct input.error").removeClass("error");
+				}
+				this.defaultShowErrors();
+			},
+			submitHandler: function () {
+				page.commands.createCustomerWithAvatar();
+			}
+		})
+
+		page.commands.createCustomerWithAvatar = () => {
+			page.elements.loader.removeClass("hide");
+			page.dialogs.elements.btnCreate.prop('disabled', true);
+
+			let formData = new FormData();
+			formData.append("fullName", page.dialogs.elements.fullNameCre.val().toString());
+			formData.append("email", page.dialogs.elements.emailCre.val().toString());
+			formData.append("phone", page.dialogs.elements.phoneCre.val().toString());
+			if (page.dialogs.elements.imageFile[0].files[0] != undefined) {
+				formData.append("file", page.dialogs.elements.imageFile[0].files[0]);
+			}
+
+			formData.append("provinceId", page.dialogs.elements.provinceCre.val().toString());
+			formData.append("provinceName", page.dialogs.elements.provinceCre.find("option:selected").text());
+			formData.append("districtId", page.dialogs.elements.districtCre.val().toString());
+			formData.append("districtName", page.dialogs.elements.districtCre.find("option:selected").text());
+			formData.append("wardId", page.dialogs.elements.wardCre.val().toString());
+			formData.append("wardName", page.dialogs.elements.wardCre.find("option:selected").text());
+			formData.append("address", page.dialogs.elements.addressCre.val().toString());
+			formData.append("password", page.dialogs.elements.passwordCre.val().toString());
+
+			page.dialogs.alertDanger.modalCreate.removeClass("show").addClass("hide").empty();
+
+			$.ajax({
+				type: "POST",
+				contentType: false,
+				cache: false,
+				processData: false,
+				url: page.urls.createCustomer,
+				data: formData
+			}).done((data) => {
+
+				page.dialogs.elements.modalCreate.modal("hide");
+
+				page.commands.removeEventShow();
+				page.commands.handleEventShow();
+				App.SweetAlert.showAlertSuccess(App.AlertMessageVi.SUCCESS_CREATED);
+
+			}).fail((jqXHR) => {
+				page.dialogs.alertDanger.modalCreate.removeClass("hide").addClass("show");
+				let errors = jqXHR.responseJSON;
+
+				if (errors) {
+					let str = "";
+					$.each(errors, (k, v) => {
+						str += `
+                            <li><label for="${k + 'Cre'}">${v}</label></li>
+                        `;
+					})
+
+					page.dialogs.alertDanger.modalCreate.append(str);
+				}
+			}).always(function () {
+				page.elements.loader.addClass("hide");
+				page.dialogs.elements.btnCreate.attr('disabled', false);
+			});
+		}
+
+		page.dialogs.commands.handleCloseCreateModal = () => {
+			page.dialogs.alertDanger.modalCreate.removeClass("show").addClass("hide").empty();
+			page.dialogs.elements.frmCreateCustomer[0].reset();
+			page.dialogs.elements.frmCreateCustomer.validate().resetForm();
+		}
+
+		page.commands.handleEventShow = () => {
+			$(document).ready(function () {
+				$('[data-toggle="tooltip"]').tooltip();
+			});
+		}
+		page.commands.removeEventShow = () => {
+		}
+
+		page.dialogs.commands.loadImageToCanvas = (imageFile) => {
+			page.dialogs.elements.imagePreview.css("display", "");
+			page.dialogs.elements.wrapper.addClass("active");
+			page.dialogs.elements.wrapperContent.css("opacity", 0);
+
+			let imageObj = new Image();
+
+			imageObj.onload = function () {
+				page.dialogs.elements.context.canvas.width = imageObj.width;
+				page.dialogs.elements.context.canvas.height = imageObj.height;
+				page.dialogs.elements.context.drawImage(imageObj, 0, 0, imageObj.width, imageObj.height);
+			};
+
+			imageObj.src = URL.createObjectURL(imageFile)
+		}
+		page.dialogs.commands.changeImagePreview = () => {
+			let imageFile = page.dialogs.elements.imageFile[0].files[0];
+
+			if (imageFile) {
+				let reader = new FileReader();
+
+				reader.readAsDataURL(imageFile);
+
+				reader.onload = function(e){
+					if (e.target.readyState === FileReader.DONE) {
+						page.dialogs.commands.loadImageToCanvas(imageFile);
+					}
+				}
+			} else {
+				page.dialogs.elements.clearImagePreview();
+			}
+		}
+		page.dialogs.elements.clearImagePreview = () => {
+			page.dialogs.elements.imageFile.val("");
+			page.dialogs.elements.imagePreview.css("display", "none");
+			page.dialogs.elements.wrapper.removeClass("active");
+			page.dialogs.elements.wrapperContent.css("opacity", 1);
+		}
+
+
+		page.commands.addSlick = () => {
+			(function($) {
+				"use strict"
+
+				// Mobile Nav toggle
+				$('.menu-toggle > a').on('click', function (e) {
+					e.preventDefault();
+					$('#responsive-nav').toggleClass('active');
+				})
+
+				// Fix cart dropdown from closing
+				$('.cart-dropdown').on('click', function (e) {
+					e.stopPropagation();
+				});
+
+				/////////////////////////////////////////
+
+				// Products Slick
+				$('.products-slick').each(function() {
+					var $this = $(this),
+							$nav = $this.attr('data-nav');
+
+					$this.slick({
+						slidesToShow: 4,
+						slidesToScroll: 1,
+						autoplay: true,
+						infinite: true,
+						speed: 300,
+						dots: false,
+						arrows: true,
+						appendArrows: $nav ? $nav : false,
+						responsive: [{
+							breakpoint: 991,
+							settings: {
+								slidesToShow: 2,
+								slidesToScroll: 1,
+							}
+						},
+							{
+								breakpoint: 480,
+								settings: {
+									slidesToShow: 1,
+									slidesToScroll: 1,
+								}
+							},
+						]
+					});
+				});
+
+				// Products Widget Slick
+				$('.products-widget-slick').each(function() {
+					var $this = $(this),
+							$nav = $this.attr('data-nav');
+
+					$this.slick({
+						infinite: true,
+						autoplay: true,
+						speed: 300,
+						dots: false,
+						arrows: true,
+						appendArrows: $nav ? $nav : false,
+					});
+				});
+
+				/////////////////////////////////////////
+
+				// Product Main img Slick
+				$('#product-main-img').slick({
+					infinite: true,
+					speed: 300,
+					dots: false,
+					arrows: true,
+					fade: true,
+					asNavFor: '#product-imgs',
+				});
+
+				// Product imgs Slick
+				$('#product-imgs').slick({
+					slidesToShow: 3,
+					slidesToScroll: 1,
+					arrows: true,
+					centerMode: true,
+					focusOnSelect: true,
+					centerPadding: 0,
+					vertical: true,
+					asNavFor: '#product-main-img',
+					responsive: [{
+						breakpoint: 991,
+						settings: {
+							vertical: false,
+							arrows: false,
+							dots: true,
+						}
+					},
+					]
+				});
+
+				// Product img zoom
+				var zoomMainProduct = document.getElementById('product-main-img');
+				if (zoomMainProduct) {
+					$('#product-main-img .product-preview').zoom();
+				}
+
+				/////////////////////////////////////////
+
+				// Input number
+				$('.input-number').each(function() {
+					var $this = $(this),
+							$input = $this.find('input[type="number"]'),
+							up = $this.find('.qty-up'),
+							down = $this.find('.qty-down');
+
+					down.on('click', function () {
+						var value = parseInt($input.val()) - 1;
+						value = value < 1 ? 1 : value;
+						$input.val(value);
+						$input.change();
+						updatePriceSlider($this , value)
+					})
+
+					up.on('click', function () {
+						var value = parseInt($input.val()) + 1;
+						$input.val(value);
+						$input.change();
+						updatePriceSlider($this , value)
+					})
+				});
+
+				var priceInputMax = document.getElementById('price-max'),
+						priceInputMin = document.getElementById('price-min');
+
+				priceInputMax.addEventListener('change', function(){
+					updatePriceSlider($(this).parent() , this.value)
+				});
+
+				priceInputMin.addEventListener('change', function(){
+					updatePriceSlider($(this).parent() , this.value)
+				});
+
+				function updatePriceSlider(elem , value) {
+					if ( elem.hasClass('price-min') ) {
+						console.log('min')
+						priceSlider.noUiSlider.set([value, null]);
+					} else if ( elem.hasClass('price-max')) {
+						console.log('max')
+						priceSlider.noUiSlider.set([null, value]);
+					}
+				}
+
+				// Price Slider
+				var priceSlider = document.getElementById('price-slider');
+				if (priceSlider) {
+					noUiSlider.create(priceSlider, {
+						start: [1, 999],
+						connect: true,
+						step: 1,
+						range: {
+							'min': 1,
+							'max': 999
+						}
+					});
+
+					priceSlider.noUiSlider.on('update', function( values, handle ) {
+						var value = values[handle];
+						handle ? priceInputMax.value = value : priceInputMin.value = value
+					});
+				}
+
+			})(jQuery);
+
+		}
+
+		page.commands.loadData = () => {
+			page.commands.getAllProducts();
+			page.commands.getAllCategories();
+
+			page.commands.getAllProvinces("Cre").then(() => {
+				let provinceId = page.dialogs.elements.provinceCre.val();
+				page.commands.getAllDistricts(provinceId,"Cre").then(() => {
+					let districtId = page.dialogs.elements.districtCre.val();
+					page.commands.getAllWards(districtId,"Cre");
+				});
+			})
+		}
+
+		page.initializeEventControl = () => {
+			page.dialogs.elements.modalCreate.on("hidden.bs.modal", function () {
+				page.dialogs.commands.handleCloseCreateModal();
+			});
+
+			page.dialogs.elements.divImagePreview.on("click", function () {
+				page.dialogs.elements.imageFile.trigger("click");
+			});
+			page.dialogs.elements.imageFile.on("change", function () {
+				page.dialogs.commands.changeImagePreview();
+			});
+			page.dialogs.elements.btnClearImagePreview.on("click", function () {
+				page.dialogs.elements.clearImagePreview();
+			});
+		}
+
+
+		$(() => {
+			page.commands.loadData();
+
+
+			page.initializeEventControl();
+		})
+
+		function onLoad(loading, loaded) {
+			if(document.readyState === 'complete'){
+				return loaded();
+			}
+			loading();
+			if (window.addEventListener) {
+				window.addEventListener('load', loaded, false);
+			}
+			else if (window.attachEvent) {
+				window.attachEvent('onload', loaded);
+			}
+		};
+		setTimeout(function () {
+			onLoad(function(){
+						console.log('I am waiting for the page to be loaded');
+					},
+					function(){
+						page.commands.addSlick();
+					});
+		}, 1000);
+
+
+
+
+
+
+
+
+	</script>
+</html>

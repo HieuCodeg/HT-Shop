@@ -73,15 +73,20 @@ public class ProductCreateDTO implements Validator{
             errors.rejectValue("price", "","Giá sản phẩm quá lớn");
         }
 
-        String oldPrice = productCreateDTO.getPrice();
+        String oldPrice = productCreateDTO.getOldPrice();
+        if (oldPrice != null) {
+            if (oldPrice.isEmpty()) {
+                oldPrice = null;
+            }
+        }
 
         if (oldPrice != null) {
-            if (!price.matches("(^\\d+$)")){
-                errors.rejectValue("price", "","Giá sản phẩm phải là số");
-            } else if (Long.valueOf(price) < 500) {
-                errors.rejectValue("price", "","Giá sản phẩm thấp nhất là 500");
-            } else if (Long.valueOf(price) > 999999999999l) {
-                errors.rejectValue("price", "","Giá sản phẩm quá lớn");
+            if (!oldPrice.matches("(^\\d+$)")){
+                errors.rejectValue("oldPrice", "","Giá sản phẩm phải là số");
+            } else if (Long.valueOf(oldPrice) < 500) {
+                errors.rejectValue("oldPrice", "","Giá sản phẩm thấp nhất là 500");
+            } else if (Long.valueOf(oldPrice) > 999999999999l) {
+                errors.rejectValue("oldPrice", "","Giá sản phẩm quá lớn");
             }
         }
 
@@ -98,8 +103,10 @@ public class ProductCreateDTO implements Validator{
         }
 
         String discount = productCreateDTO.getDiscount();
-        if (discount.isEmpty()) {
-            discount = null;
+        if (discount!= null) {
+            if (discount.isEmpty()) {
+                discount = null;
+            }
         }
 
         if (discount != null) {
